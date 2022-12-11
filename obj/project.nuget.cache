@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "H0uBwqA1ZQUKea5YZ4xAIY2cBhaBUxDufEHN1QRgnwTkiaiVBGXwKJdKVwHAe7/bfZiRLJQlPillzstlZrtiXA==",
+  "success": true,
+  "projectFilePath": "A:\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Marc\\.nuget\\packages\\sayers.sdl2.core\\1.0.11\\sayers.sdl2.core.1.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}
