@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "H0uBwqA1ZQUKea5YZ4xAIY2cBhaBUxDufEHN1QRgnwTkiaiVBGXwKJdKVwHAe7/bfZiRLJQlPillzstlZrtiXA==",
+  "dgSpecHash": "JYs8/V1pTE24BTHHc/1oZsj2Y3Jx6nVi89TIjwfLiXzXa+JJUqJY/fiSBL/nIFNlvJOjpzc7fMfIv7x32lSdyA==",
   "success": true,
-  "projectFilePath": "A:\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
+  "projectFilePath": "C:\\Users\\marcc\\Documents\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Marc\\.nuget\\packages\\sayers.sdl2.core\\1.0.11\\sayers.sdl2.core.1.0.11.nupkg.sha512"
+    "C:\\Users\\marcc\\.nuget\\packages\\sayers.sdl2.core\\1.0.11\\sayers.sdl2.core.1.0.11.nupkg.sha512"
   ],
   "logs": []
 }

@@ -8,53 +8,52 @@ namespace ZaephusEngine {
 
     public class Circle : Shape {
 
-        private Vector2Int pos = new Vector2Int(0, 0);
-        private int radius;
+        private float radius;
 
-        private List<Vector2Int> points = new List<Vector2Int>();
-
-        public Circle(int _x, int _y, int _r) {
-            pos = new Vector2Int(_x, _y);
+        public Circle(float _x, float _y, float _r) {
+            position = new Vector2(_x, _y);
             radius = _r;
-
-            GenerateCircle();
+            
+            points = GenerateShape();
         }
 
-        public Circle(int _x, int _y, int _r, Colour _c) {
-            pos = new Vector2Int(_x, _y);
+        public Circle(float _x, float _y, float _r, Colour _c) {
+            position = new Vector2(_x, _y);
             radius = _r;
             colour = _c;
-
-            GenerateCircle();
+            
+            points = GenerateShape();
         }
 
         public override void Draw() {
             SDL_SetRenderDrawColor(Window.renderer, colour.R, colour.G, colour.B, colour.A);
-            foreach(Vector2Int point in points) {
-                SDL_RenderDrawPoint(Window.renderer, pos.x + point.x, pos.y + point.y);
+            foreach(Vector2 point in points) {
+                SDL_RenderDrawPoint(Window.renderer, (int)(position.x + point.x), (int)(position.y + point.y));
             }
         }
 
-        private void GenerateCircle() {
+        protected override List<Vector2> GenerateShape() {
             
-            //Mid Point Algorithm: https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm&oldid=889172082#C_example
+            //Mid Point Circle Algorithm: https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm&oldid=889172082#C_example
+
+            List<Vector2> p = new List<Vector2>();
             
-            int x = radius - 1;
-            int y = 0;
-            int dx = 1;
-            int dy = 1;
-            int err = dx - radius * 2;
+            float x = radius - 1;
+            float y = 0;
+            float dx = 1;
+            float dy = 1;
+            float err = dx - radius * 2;
 
             while (x >= y) {
 
-                points.Add(new Vector2Int(pos.x + x, pos.y + y));
-                points.Add(new Vector2Int(pos.x + y, pos.y + x));
-                points.Add(new Vector2Int(pos.x - y, pos.y + x));
-                points.Add(new Vector2Int(pos.x - x, pos.y + y));
-                points.Add(new Vector2Int(pos.x - x, pos.y - y));
-                points.Add(new Vector2Int(pos.x - y, pos.y - x));
-                points.Add(new Vector2Int(pos.x + y, pos.y - x));
-                points.Add(new Vector2Int(pos.x + x, pos.y - y));
+                p.Add(new Vector2(x, y));
+                p.Add(new Vector2(y, x));
+                p.Add(new Vector2(-y, x));
+                p.Add(new Vector2(-x, y));
+                p.Add(new Vector2(-x, -y));
+                p.Add(new Vector2(-y, -x));
+                p.Add(new Vector2(y, -x));
+                p.Add(new Vector2(x, -y));
 
                 if(err <= 0) {
                     y++;
@@ -69,6 +68,8 @@ namespace ZaephusEngine {
                 }
 
             }
+
+            return p;
 
         }
 

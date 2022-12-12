@@ -53,19 +53,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Marc\\.nuget\\packages\\": {}
+    "C:\\Users\\marcc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "a:\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
+      "projectUniqueName": "C:\\Users\\marcc\\Documents\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
       "projectName": "Zaephus_Game_Engine",
-      "projectPath": "a:\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
-      "packagesPath": "C:\\Users\\Marc\\.nuget\\packages\\",
-      "outputPath": "a:\\Projects\\Zaephus_Game_Engine\\obj\\",
+      "projectPath": "C:\\Users\\marcc\\Documents\\Projects\\Zaephus_Game_Engine\\Zaephus_Game_Engine.csproj",
+      "packagesPath": "C:\\Users\\marcc\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\marcc\\Documents\\Projects\\Zaephus_Game_Engine\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Marc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\marcc\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
