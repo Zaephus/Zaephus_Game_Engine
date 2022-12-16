@@ -42,9 +42,8 @@ namespace ZaephusEngine {
             return _a.x * _b.x + _a.y * _b.y;
         }
 
-        public static float Angle(Vector2 _from, Vector2 _to) {
-            float dot = Vector2.Dot(_from, _to);
-            return MathF.Acos(dot / (_from.magnitude * _to.magnitude));
+        public static float Angle(Vector2 _a, Vector2 _b) {
+            return MathF.Acos(Vector2.Dot(_a, _b) / _a.magnitude * _b.magnitude);
         }
 
         public override int GetHashCode() {
