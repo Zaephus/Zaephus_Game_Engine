@@ -38,6 +38,14 @@ namespace ZaephusEngine {
             float mag = magnitude;
             this = this / (int)mag;
         }
+        
+        public static float Dot(Vector2Int _a, Vector2Int _b) {
+            return _a.x * _b.x + _a.y * _b.y;
+        }
+
+        public static float Angle(Vector2Int _a, Vector2Int _b) {
+            return MathF.Acos(Vector2Int.Dot(_a, _b) / _a.magnitude * _b.magnitude);
+        }
 
         public override int GetHashCode() {
             return x.GetHashCode() ^ (y.GetHashCode() << 2);
@@ -93,6 +101,8 @@ namespace ZaephusEngine {
 
         public static Vector2Int zero { get { return new Vector2Int(0, 0); } }
         public static Vector2Int one { get { return new Vector2Int(1, 1); } }
+        public static Vector2Int right { get { return new Vector2Int(1, 0); } }
+        public static Vector2Int up { get { return new Vector2Int(0, 1); } }
 
     }
 
