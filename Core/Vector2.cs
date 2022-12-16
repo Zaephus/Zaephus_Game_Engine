@@ -34,6 +34,10 @@ namespace ZaephusEngine {
             this = this / mag;
         }
 
+        public static float Distance(Vector2 _a, Vector2 _b) {
+            return MathF.Sqrt(((_b.x - _a.x) * (_b.x - _a.x)) + ((_b.y - _a.y) * (_b.y - _a.y)));
+        }
+
         public static float Dot(Vector2 _a, Vector2 _b) {
             return _a.x * _b.x + _a.y * _b.y;
         }
