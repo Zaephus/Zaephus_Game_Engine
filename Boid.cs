@@ -12,6 +12,10 @@ public class Boid {
     private float separationFactor;
     private float alignmentFactor;
     private float cohesionFactor;
+    private float turnFactor;
+
+    private float minSpeed;
+    private float maxSpeed;
 
     private float viewDist;
     private float protectedDist;
@@ -20,20 +24,22 @@ public class Boid {
 
     private Flock flock;
 
-    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _viewDist, float _protectedDist) {
+    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist) {
         
         flock = _flock;
         body = GenerateBody();
         
         position = _pos;
-        velocity = Vector2.RandomVector(-0.5f, 0.5f);
-
-        body.position = _pos;
-        body.rotation = -2*Vector2.Angle(velocity, Vector2.right);
 
         separationFactor = _seperationFactor;
         alignmentFactor = _alignmentFactor;
         cohesionFactor = _cohesionFactor;
+        turnFactor = _turnFactor;
+
+        minSpeed = _minSpeed;
+        maxSpeed = _maxSpeed;
+
+        velocity = Vector2.RandomVector(-minSpeed, minSpeed);
 
         viewDist = _viewDist;
         protectedDist = _protectedDist;
@@ -60,17 +66,17 @@ public class Boid {
             }
         }
 
-        if(MathF.Abs((flock.rightBounds[1].x - flock.rightBounds[0].x) * (flock.rightBounds[0].y - position.y) - (flock.rightBounds[0].x - position.x) * (flock.rightBounds[1].y - flock.rightBounds[0].y)) / Vector2.Distance(flock.rightBounds[0], flock.rightBounds[1]) <= protectedDist) {
-            close -= Vector2.right;
+        if(position.x > flock.rightBound - protectedDist) {
+            velocity.x -= turnFactor;
         }
-        if(MathF.Abs((flock.leftBounds[1].x - flock.leftBounds[0].x) * (flock.leftBounds[0].y - position.y) - (flock.leftBounds[0].x - position.x) * (flock.leftBounds[1].y - flock.leftBounds[0].y)) / Vector2.Distance(flock.leftBounds[0], flock.leftBounds[1]) <= protectedDist) {
-            close += Vector2.right;
+        if(position.x < flock.leftBound + protectedDist) {
+            velocity.x += turnFactor;
         }
-        if(MathF.Abs((flock.upperBounds[1].x - flock.upperBounds[0].x) * (flock.upperBounds[0].y - position.y) - (flock.upperBounds[0].x - position.x) * (flock.upperBounds[1].y - flock.upperBounds[0].y)) / Vector2.Distance(flock.upperBounds[0], flock.upperBounds[1]) <= protectedDist) {
-            close -= Vector2.up;
+        if(position.y < flock.upperBound + protectedDist) {
+            velocity.y += turnFactor;
         }
-        if(MathF.Abs((flock.bottomBounds[1].x - flock.bottomBounds[0].x) * (flock.bottomBounds[0].y - position.y) - (flock.bottomBounds[0].x - position.x) * (flock.bottomBounds[1].y - flock.bottomBounds[0].y)) / Vector2.Distance(flock.bottomBounds[0], flock.bottomBounds[1]) <= protectedDist) {
-            close += Vector2.up;
+        if(position.y > flock.lowerBound - protectedDist) {
+            velocity.y -= turnFactor;
         }
 
         if(neighbouringBoids > 0) {
@@ -81,6 +87,13 @@ public class Boid {
         velocity += close * separationFactor;
         velocity += (velAvg - velocity) * alignmentFactor;
         velocity += (posAvg - position) * cohesionFactor;
+
+        if(velocity.magnitude < minSpeed) {
+            velocity = velocity.normalized * minSpeed;
+        }
+        else if(velocity.magnitude > maxSpeed) {
+            velocity = velocity.normalized * maxSpeed;
+        }
 
         position += velocity;
 

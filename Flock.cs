@@ -6,32 +6,24 @@ using ZaephusEngine;
 using Random = ZaephusEngine.Random;
 
 public class Flock {
-    
-    private float separationFactor = 0.001f;
-    private float alignmentFactor = 0.0005f;
-    private float cohesionFactor = 0.00005f;
-
-    private float viewDist = 150;
-    private float protectedDist = 50;
 
     public List<Boid> boids = new List<Boid>();
 
-    public Vector2[] rightBounds = new Vector2[] {
-        new Vector2(Window.WIDTH, 0),
-        new Vector2(Window.WIDTH, Window.HEIGHT)
-    };
-    public Vector2[] leftBounds = new Vector2 [] {
-        new Vector2(0, 0),
-        new Vector2(0, Window.HEIGHT)
-    };
-    public Vector2[] upperBounds = new Vector2 [] {
-        new Vector2(0, 0),
-        new Vector2(Window.WIDTH, 0)
-    };
-    public Vector2[] bottomBounds = new Vector2 [] {
-        new Vector2(0, Window.HEIGHT),
-        new Vector2(Window.WIDTH, Window.HEIGHT)
-    };
+    public float rightBound = Window.WIDTH;
+    public float leftBound = 0;
+    public float upperBound = 0;
+    public float lowerBound = Window.HEIGHT;
+    
+    private float separationFactor = 0.08f;
+    private float alignmentFactor = 0.05f;
+    private float cohesionFactor = 0.008f;
+    private float turnFactor = 0.2f;
+
+    private float minSpeed = 0.3f;
+    private float maxSpeed = 2f;
+
+    private float viewDist = 100;
+    private float protectedDist = 40;
 
     public Flock(int _boidAmount) {
         for(int i = 0; i < _boidAmount; i++) {
@@ -41,6 +33,9 @@ public class Flock {
                 separationFactor,
                 alignmentFactor,
                 cohesionFactor,
+                turnFactor,
+                minSpeed,
+                maxSpeed,
                 viewDist,
                 protectedDist
             ));
@@ -50,7 +45,6 @@ public class Flock {
     public void Update() {
         foreach(Boid b in boids) {
             b.Update();
-            //b.body.rotation += 0.01f;
         }
     }
 
