@@ -15,8 +15,8 @@ public static class Window {
 
     public static List<Shape> shapes = new List<Shape>();
 
-    public const int WIDTH = 640;
-    public const int HEIGHT = 480;
+    public const int WIDTH = 1000;
+    public const int HEIGHT = 800;
 
     /// <summary>
     /// Setup all of the SDL resources needed to display a window.
@@ -38,8 +38,7 @@ public static class Window {
             WIDTH,
             HEIGHT,
             SDL_WindowFlags.SDL_WINDOW_SHOWN |
-            SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI |
-            SDL_WindowFlags.SDL_WINDOW_RESIZABLE
+            SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI
         );
 
         if(window == IntPtr.Zero) {

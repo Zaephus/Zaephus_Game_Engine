@@ -7,7 +7,7 @@ using Random = ZaephusEngine.Random;
 
 public class Game {
 
-    public Flock flock = new Flock(20);
+    public Flock flock = new Flock(1);
 
     public void Setup() {}
 
