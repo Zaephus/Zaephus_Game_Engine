@@ -20,11 +20,13 @@ public class Boid {
     private float viewDist;
     private float protectedDist;
 
+    private float viewRange;
+
     public Polygon body;
 
     private Flock flock;
 
-    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist) {
+    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist, float _viewRange) {
         
         flock = _flock;
         body = GenerateBody();
@@ -39,10 +41,13 @@ public class Boid {
         minSpeed = _minSpeed;
         maxSpeed = _maxSpeed;
 
-        velocity = Vector2.RandomVector(-minSpeed, minSpeed);
+        velocity = Vector2.RandomVector(-maxSpeed, maxSpeed);
+        Console.WriteLine(velocity.x + " " + velocity.y);
 
         viewDist = _viewDist;
         protectedDist = _protectedDist;
+
+        viewRange = _viewRange;
         
     }
 
@@ -53,29 +58,45 @@ public class Boid {
         Vector2 posAvg = Vector2.zero;
         int neighbouringBoids = 0;
 
-        foreach(Boid b in flock.boids) {
-            if(b != this) {
-                if(Vector2.Distance(position, b.position) <= protectedDist) {
-                    close += (position - b.position);
-                }
-                if(Vector2.Distance(position, b.position) <= viewDist) {
-                    velAvg += b.velocity;
-                    posAvg += b.position;
-                    neighbouringBoids++;
-                }
+        for(int i = 0; i < flock.boids.Count; i++) {
+
+            if(flock.boids[i] == this) {
+                continue;
             }
+
+            Vector2 diff = position - flock.boids[i].position;
+            if(Vector2.Angle(velocity, diff) > viewRange) {
+                continue;
+            }
+
+            if(Vector2.Distance(position, flock.boids[i].position) <= protectedDist) {
+                    close += (position - flock.boids[i].position);
+            }
+            if(Vector2.Distance(position, flock.boids[i].position) <= viewDist) {
+                velAvg += flock.boids[i].velocity;
+                posAvg += flock.boids[i].position;
+                neighbouringBoids++;
+            }
+
         }
 
+        //Maybe it is possible to rotate the boids with the following equation:
+        //https://www.quora.com/If-a-vector-of-magnitude-A-is-rotated-through-certain-degree-than-what-is-change-in-that-vector
+
         if(position.x > flock.rightBound - protectedDist) {
+            Console.WriteLine("Right");
             velocity.x -= turnFactor;
         }
         if(position.x < flock.leftBound + protectedDist) {
+            Console.WriteLine("Left");
             velocity.x += turnFactor;
         }
         if(position.y < flock.upperBound + protectedDist) {
+            Console.WriteLine("Upper");
             velocity.y += turnFactor;
         }
         if(position.y > flock.lowerBound - protectedDist) {
+            Console.WriteLine("Lower");
             velocity.y -= turnFactor;
         }
 
@@ -85,14 +106,14 @@ public class Boid {
         }
 
         velocity += close * separationFactor;
-        velocity += (velAvg - velocity) * alignmentFactor;
-        velocity += (posAvg - position) * cohesionFactor;
+        //velocity += (velAvg - velocity) * alignmentFactor;
+        //velocity += (posAvg - position) * cohesionFactor;
 
         if(velocity.magnitude < minSpeed) {
-            velocity = velocity.normalized * minSpeed;
+            velocity *= (minSpeed / velocity.magnitude);
         }
         else if(velocity.magnitude > maxSpeed) {
-            velocity = velocity.normalized * maxSpeed;
+            velocity *= (maxSpeed / velocity.magnitude);
         }
 
         position += velocity;
@@ -118,4 +139,5 @@ public class Boid {
         return poly;
 
     }
+
 }
