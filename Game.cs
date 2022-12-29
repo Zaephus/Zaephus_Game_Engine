@@ -26,8 +26,9 @@ public class Game {
 
         hex.position = new Vector2(hex.position.x+0.1f, hex.position.y+0.1f);
         hex.rotation = 1;
-        rect.position = new Vector2(rect.position.x+1, rect.position.y-1);
-        rect.rotation -= 0.01f;
+        //rect.position = new Vector2(rect.position.x+1, rect.position.y-1);
+        //rect.rotation -= 0.01f;
+        hex.scale += 0.001f;
 
         ellipse.rotation += 0.02f;
 

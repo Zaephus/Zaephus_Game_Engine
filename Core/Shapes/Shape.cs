@@ -8,24 +8,12 @@ namespace ZaephusEngine {
 
     public abstract class Shape {
 
-        public Vector2 position;
-        private float rot;
-        public float rotation {
-            get {
-                return rot;
-            }
-            set {
-                rot = value;
-                for(int i = 0; i < points.Count; i++) {
-                    points[i] = new Vector2(
-                        GenerateShape()[i].x * MathF.Cos(rot) - GenerateShape()[i].y * MathF.Sin(rot),
-                        GenerateShape()[i].x * MathF.Sin(rot) + GenerateShape()[i].y * MathF.Cos(rot)
-                    );
-                }
-            }
-        }
+        public Vector2 position { get; set; }
+        public float rotation { get; set; }
+        public float scale { get; set; }
 
         protected List<Vector2> points = new List<Vector2>();
+        protected List<Vector2> basePoints = new List<Vector2>();
 
         protected Colour colour;
 
@@ -38,6 +26,12 @@ namespace ZaephusEngine {
             SDL_SetRenderDrawColor(Window.renderer, colour.R, colour.G, colour.B, colour.A);
 
             for(int i = 0; i < points.Count; i++) {
+
+                points[i] = new Vector2(
+                    scale * (basePoints[i].x * MathF.Cos(rotation) - basePoints[i].y * MathF.Sin(rotation)),
+                    scale * (basePoints[i].x * MathF.Sin(rotation) + basePoints[i].y * MathF.Cos(rotation))
+                );
+
                 SDL_RenderDrawLine(
                     Window.renderer,
                     (int)(position.x + points[i].x),

@@ -15,8 +15,11 @@ namespace ZaephusEngine {
             position = new Vector2(_x, _y);
             radiusX = _w/2;
             radiusY = _h/2;
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public Ellipse(float _x, float _y, float _w, float _h, Colour _c) {
@@ -24,8 +27,11 @@ namespace ZaephusEngine {
             radiusX = _w/2;
             radiusY = _h/2;
             colour = _c;
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public override void Draw() {

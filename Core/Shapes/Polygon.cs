@@ -13,18 +13,24 @@ namespace ZaephusEngine {
         public Polygon(float _x, float _y, params Vector2[] _points) {
             position = new Vector2(_x, _y);
 
+            scale = 1f;
+
             p.AddRange(_points);
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public Polygon(float _x, float _y, Colour _c, params Vector2[] _points) {
             position = new Vector2(_x, _y);
             colour = _c;
 
+            scale = 1f;
+
             p.AddRange(_points);
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         protected override List<Vector2> GenerateShape() {

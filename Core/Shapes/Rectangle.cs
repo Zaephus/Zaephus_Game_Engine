@@ -13,8 +13,11 @@ namespace ZaephusEngine {
         public Rectangle(int _x, int _y, int _w, int _h) {
             position = new Vector2(_x, _y);
             size = new Vector2(_w, _h);
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public Rectangle(int _x, int _y, int _w, int _h, Colour _c) {
@@ -22,8 +25,11 @@ namespace ZaephusEngine {
             size = new Vector2(_w, _h);
 
             colour = _c;
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         protected override List<Vector2> GenerateShape() {

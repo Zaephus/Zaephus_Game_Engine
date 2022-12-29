@@ -13,16 +13,22 @@ namespace ZaephusEngine {
         public Circle(float _x, float _y, float _r) {
             position = new Vector2(_x, _y);
             radius = _r;
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public Circle(float _x, float _y, float _r, Colour _c) {
             position = new Vector2(_x, _y);
             radius = _r;
             colour = _c;
+
+            scale = 1f;
             
             points = GenerateShape();
+            basePoints = GenerateShape();
         }
 
         public override void Draw() {
