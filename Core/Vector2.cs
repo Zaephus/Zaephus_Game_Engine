@@ -35,8 +35,11 @@ namespace ZaephusEngine {
         }
 
         public void Rotate(float _rad) {
-            x = x * MathF.Cos(_rad) - y * MathF.Sin(_rad);
-            y = x * MathF.Sin(_rad) + y * MathF.Cos(_rad);
+            float a = x * MathF.Cos(_rad) - y * MathF.Sin(_rad);
+            float b = x * MathF.Sin(_rad) + y * MathF.Cos(_rad);
+
+            x = a;
+            y = b;
         }
 
         public static float Distance(Vector2 _a, Vector2 _b) {
