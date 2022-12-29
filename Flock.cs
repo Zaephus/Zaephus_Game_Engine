@@ -14,18 +14,16 @@ public class Flock {
     public float upperBound = 100;
     public float lowerBound = Window.HEIGHT - 100;
     
-    private float separationFactor = 0.002f;
+    private float separationFactor = 0.02f;
     private float alignmentFactor = 0.05f;
     private float cohesionFactor = 0.002f;
-    private float turnFactor = 0.08f;
+    private float turnFactor = 0.05f;
 
     private float minSpeed = 1f;
     private float maxSpeed = 4f;
 
-    private float viewDist = 100;
+    private float viewDist = 120;
     private float protectedDist = 30;
-
-    private float viewRange = 2;
 
     public Flock(int _boidAmount) {
 
@@ -42,8 +40,7 @@ public class Flock {
                 minSpeed,
                 maxSpeed,
                 viewDist,
-                protectedDist,
-                viewRange
+                protectedDist
             ));
         }
 

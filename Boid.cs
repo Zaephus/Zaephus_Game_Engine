@@ -20,8 +20,6 @@ public class Boid {
     private float viewDist;
     private float protectedDist;
 
-    private float viewRange;
-
     public Polygon body;
 
     private Flock flock;
@@ -29,7 +27,7 @@ public class Boid {
     //Using the following article for reference of the boid simulation:
     //https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 
-    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist, float _viewRange) {
+    public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist) {
         
         flock = _flock;
         body = GenerateBody();
@@ -45,12 +43,9 @@ public class Boid {
         maxSpeed = _maxSpeed;
 
         velocity = Vector2.RandomVector(-maxSpeed, maxSpeed);
-        Console.WriteLine(velocity.x + " " + velocity.y);
 
         viewDist = _viewDist;
         protectedDist = _protectedDist;
-
-        viewRange = _viewRange;
         
     }
 
@@ -67,11 +62,6 @@ public class Boid {
                 continue;
             }
 
-            Vector2 diff = position - flock.boids[i].position;
-            if(Vector2.Angle(velocity, diff) > viewRange) {
-                continue;
-            }
-
             if(Vector2.Distance(position, flock.boids[i].position) <= protectedDist) {
                     close += (position - flock.boids[i].position);
             }
@@ -83,34 +73,48 @@ public class Boid {
 
         }
 
-        //Maybe it is possible to rotate the boids with the following equation:
-        //https://www.quora.com/If-a-vector-of-magnitude-A-is-rotated-through-certain-degree-than-what-is-change-in-that-vector
-
         if(position.x > flock.rightBound - protectedDist) {
-            Console.WriteLine("Right");
-            velocity.x -= turnFactor;
+            if(velocity.y < 0) {
+                velocity.Rotate(-turnFactor);
+            }
+            else {
+                velocity.Rotate(turnFactor);
+            }
         }
-        if(position.x < flock.leftBound + protectedDist) {
-            Console.WriteLine("Left");
-            velocity.x += turnFactor;
+        else if(position.x < flock.leftBound + protectedDist) {
+            if(velocity.y < 0) {
+                velocity.Rotate(turnFactor);
+            }
+            else {
+                velocity.Rotate(-turnFactor);
+            }
         }
-        if(position.y < flock.upperBound + protectedDist) {
-            Console.WriteLine("Upper");
-            velocity.y += turnFactor;
+        else if(position.y < flock.upperBound + protectedDist) {
+            if(velocity.x < 0) {
+                velocity.Rotate(-turnFactor);
+            }
+            else {
+                velocity.Rotate(turnFactor);
+            }
         }
-        if(position.y > flock.lowerBound - protectedDist) {
-            Console.WriteLine("Lower");
-            velocity.y -= turnFactor;
+        else if(position.y > flock.lowerBound - protectedDist) {
+            if(velocity.x < 0) {
+                velocity.Rotate(turnFactor);
+            }
+            else {
+                velocity.Rotate(-turnFactor);
+            }
         }
+
+        velocity += close * separationFactor;
 
         if(neighbouringBoids > 0) {
             velAvg /= neighbouringBoids;
             posAvg /= neighbouringBoids;
-        }
 
-        velocity += close * separationFactor;
-        //velocity += (velAvg - velocity) * alignmentFactor;
-        //velocity += (posAvg - position) * cohesionFactor;
+            velocity += (velAvg - velocity) * alignmentFactor;
+            velocity += (posAvg - position) * cohesionFactor;
+        }
 
         if(velocity.magnitude < minSpeed) {
             velocity *= (minSpeed / velocity.magnitude);
