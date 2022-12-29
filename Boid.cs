@@ -26,6 +26,9 @@ public class Boid {
 
     private Flock flock;
 
+    //Using the following article for reference of the boid simulation:
+    //https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
+
     public Boid(Flock _flock, Vector2 _pos, float _seperationFactor, float _alignmentFactor, float _cohesionFactor, float _turnFactor, float _minSpeed, float _maxSpeed, float _viewDist, float _protectedDist, float _viewRange) {
         
         flock = _flock;
