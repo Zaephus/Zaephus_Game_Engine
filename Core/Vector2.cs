@@ -34,6 +34,11 @@ namespace ZaephusEngine {
             this = this / mag;
         }
 
+        public void Rotate(float _rad) {
+            x = x * MathF.Cos(_rad) - y * MathF.Sin(_rad);
+            y = x * MathF.Sin(_rad) + y * MathF.Cos(_rad);
+        }
+
         public static float Distance(Vector2 _a, Vector2 _b) {
             return MathF.Sqrt(((_b.x - _a.x) * (_b.x - _a.x)) + ((_b.y - _a.y) * (_b.y - _a.y)));
         }

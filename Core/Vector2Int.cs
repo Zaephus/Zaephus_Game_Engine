@@ -38,6 +38,14 @@ namespace ZaephusEngine {
             float mag = magnitude;
             this = this / (int)mag;
         }
+
+        public void Rotate(float _rad) {
+            float a = x * MathF.Cos(_rad) - y * MathF.Sin(_rad);
+            float b = x * MathF.Sin(_rad) + y * MathF.Cos(_rad);
+
+            x = (int)MathF.Round(a);
+            y = (int)MathF.Round(b);
+        }
         
         public static float Distance(Vector2Int _a, Vector2Int _b) {
             return MathF.Sqrt(((_b.x - _a.x) * (_b.x - _a.x)) + ((_b.y - _a.y) * (_b.y - _a.y)));
