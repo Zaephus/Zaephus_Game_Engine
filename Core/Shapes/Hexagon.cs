@@ -8,24 +8,20 @@ namespace ZaephusEngine {
 
     public class Hexagon : Shape {
         
-        public float radius;
+        public float radius = 50;
 
-        public Hexagon(float _x, float _y, float _r) {
-            position = new Vector2(_x, _y);
-            radius = _r;
+        public Hexagon(Transform _transform) : base(_transform) {
 
-            scale = 1f;
+            drawType = DrawType.Lines;
             
             points = GenerateShape();
             basePoints = GenerateShape();
         }
 
-        public Hexagon(float _x, float _y, float _r, Colour _c) {
-            position = new Vector2(_x, _y);
-            radius = _r;
+        public Hexagon(Transform _transform, Colour _c) : base(_transform) {
             colour = _c;
 
-            scale = 1f;
+            drawType = DrawType.Lines;
             
             points = GenerateShape();
             basePoints = GenerateShape();

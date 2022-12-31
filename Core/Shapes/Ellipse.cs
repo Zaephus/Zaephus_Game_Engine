@@ -8,52 +8,44 @@ namespace ZaephusEngine {
 
     public class Ellipse : Shape {
 
-        private float radiusX;
-        private float radiusY;
+        private float horRadius = 50;
+        private float verRadius = 50;
 
-        public Ellipse(float _x, float _y, float _w, float _h) {
-            position = new Vector2(_x, _y);
-            radiusX = _w/2;
-            radiusY = _h/2;
+        public Ellipse(Transform _transform) : base(_transform) {
 
-            scale = 1f;
+            drawType = DrawType.Points;
             
             points = GenerateShape();
             basePoints = GenerateShape();
         }
 
-        public Ellipse(float _x, float _y, float _w, float _h, Colour _c) {
-            position = new Vector2(_x, _y);
-            radiusX = _w/2;
-            radiusY = _h/2;
+        public Ellipse(Transform _transform, Colour _c) : base(_transform) {
             colour = _c;
 
-            scale = 1f;
+            drawType = DrawType.Points;
             
             points = GenerateShape();
             basePoints = GenerateShape();
-        }
-
-        public override void Draw() {
-            SDL_SetRenderDrawColor(Window.renderer, colour.R, colour.G, colour.B, colour.A);
-            foreach(Vector2 point in points) {
-                SDL_RenderDrawPoint(Window.renderer, (int)(position.x + point.x), (int)(position.y + point.y));
-            }
         }
 
         protected override List<Vector2> GenerateShape() {
             
             //Mid Point Ellipse Algorithm: https://www.geeksforgeeks.org/midpoint-ellipse-drawing-algorithm/#:~:text=Midpoint%20ellipse%20algorithm%20plots(finds,x2ry2
 
+            Console.WriteLine("Generated a shape");
+
+            float shapeWidth = horRadius * transform.scale.x;
+            float shapeHeight = verRadius * transform.scale.y;
+
             List<Vector2> p = new List<Vector2>();
             
             float x = 0;
-            float y = radiusY;
+            float y = shapeHeight;
 
-            float dx = 2 * radiusY * radiusY * x;
-            float dy = 2 * radiusX * radiusX * y;
+            float dx = 2 * shapeHeight * shapeHeight * x;
+            float dy = 2 * shapeWidth * shapeWidth * y;
 
-            float d1 = (radiusY * radiusY) - (radiusX * radiusX * radiusY) + (0.25f * radiusX * radiusX);
+            float d1 = (shapeHeight * shapeHeight) - (shapeWidth * shapeWidth) + (0.25f * shapeWidth * shapeWidth);
 
             while (dx < dy) {
 
@@ -64,20 +56,20 @@ namespace ZaephusEngine {
 
                 if(d1 < 0) {
                     x++;
-                    dx += (2 * radiusY * radiusY);
-                    d1 += dx + (radiusY * radiusY);
+                    dx += (2 * shapeHeight * shapeHeight);
+                    d1 += dx + (shapeHeight * shapeHeight);
                 }
                 else {
                     x++;
                     y--;
-                    dx += 2 * radiusY * radiusY;
-                    dy -= 2 * radiusX * radiusX;
-                    d1 += dx - dy + (radiusY * radiusY);
+                    dx += 2 * shapeHeight * shapeHeight;
+                    dy -= 2 * shapeWidth * shapeWidth;
+                    d1 += dx - dy + (shapeHeight * shapeHeight);
                 }
 
             }
 
-            float d2 = ((radiusY * radiusY) * ((x + 0.5f) * (x + 0.5f))) + ((radiusX * radiusX) * ((y - 1) * (y - 1))) - (radiusX * radiusX * radiusY * radiusY);
+            float d2 = ((shapeHeight * shapeHeight) * ((x + 0.5f) * (x + 0.5f))) + ((shapeWidth * shapeWidth) * ((y - 1) * (y - 1))) - (shapeWidth * shapeWidth * shapeHeight * shapeHeight);
 
             while(y >= 0) {
 
@@ -88,15 +80,15 @@ namespace ZaephusEngine {
 
                 if(d2 > 0) {
                     y--;
-                    dy -= 2 * radiusX * radiusX;
-                    d2 += radiusX * radiusX - dy;
+                    dy -= 2 * shapeWidth * shapeWidth;
+                    d2 += shapeWidth * shapeWidth - dy;
                 }
                 else {
                     y--;
                     x++;
-                    dx += 2 * radiusY * radiusY;
-                    dy -= 2 * radiusX * radiusX;
-                    d2 += dx - dy + radiusX * radiusX;
+                    dx += 2 * shapeHeight * shapeHeight;
+                    dy -= 2 * shapeWidth * shapeWidth;
+                    d2 += dx - dy + shapeWidth * shapeWidth;
                 }
 
             }

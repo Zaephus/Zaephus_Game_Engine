@@ -11,13 +11,14 @@ using ZaephusEngine;
 
 Game game = new Game();
 
-game.Setup();
+game.Start();
 Window.Setup();
 
 while(Window.running) {
-    game.Update();
     Window.PollEvents();
+    game.Update();
     Window.Render();
 }
 
+game.Exit();
 Window.CleanUp();

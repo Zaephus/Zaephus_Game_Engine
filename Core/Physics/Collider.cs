@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ZaephusEngine {
 
-    public abstract class Collider {
+    public abstract class Collider : Component {
 
     }
 

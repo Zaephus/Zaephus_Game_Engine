@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ZaephusEngine {
     
-    public class BoxCollider2D : Collider {
+    public class BoxCollider2D {//: Collider {
 
         public Vector4 rect;
 

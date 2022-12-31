@@ -10,10 +10,9 @@ namespace ZaephusEngine {
 
         private List<Vector2> p = new List<Vector2>();
 
-        public Polygon(float _x, float _y, params Vector2[] _points) {
-            position = new Vector2(_x, _y);
+        public Polygon(Transform _transform, params Vector2[] _points) : base(_transform) {
 
-            scale = 1f;
+            drawType = DrawType.Lines;
 
             p.AddRange(_points);
             
@@ -21,11 +20,10 @@ namespace ZaephusEngine {
             basePoints = GenerateShape();
         }
 
-        public Polygon(float _x, float _y, Colour _c, params Vector2[] _points) {
-            position = new Vector2(_x, _y);
+        public Polygon(Transform _transform, Colour _c, params Vector2[] _points) : base(_transform) {
             colour = _c;
 
-            scale = 1f;
+            drawType = DrawType.Lines;
 
             p.AddRange(_points);
             

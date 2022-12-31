@@ -8,25 +8,22 @@ namespace ZaephusEngine {
 
     public class Rectangle : Shape {
 
-        public Vector2 size;
+        private float width = 100;
+        private float height = 100;
 
-        public Rectangle(int _x, int _y, int _w, int _h) {
-            position = new Vector2(_x, _y);
-            size = new Vector2(_w, _h);
+        public Rectangle(Transform _transform) : base(_transform) {
 
-            scale = 1f;
+            drawType = DrawType.Lines;
             
             points = GenerateShape();
             basePoints = GenerateShape();
         }
 
-        public Rectangle(int _x, int _y, int _w, int _h, Colour _c) {
-            position = new Vector2(_x, _y);
-            size = new Vector2(_w, _h);
+        public Rectangle(Transform _transform, Colour _c) : base(_transform) {
 
             colour = _c;
 
-            scale = 1f;
+            drawType = DrawType.Lines;
             
             points = GenerateShape();
             basePoints = GenerateShape();
@@ -36,10 +33,10 @@ namespace ZaephusEngine {
 
             List<Vector2> p = new List<Vector2>();
 
-            p.Add(new Vector2(-size.x/2, -size.y/2));
-            p.Add(new Vector2(size.x/2, -size.y/2));
-            p.Add(new Vector2(size.x/2, size.y/2));
-            p.Add(new Vector2(-size.x/2, size.y/2));
+            p.Add(new Vector2(-width/2, -height/2));
+            p.Add(new Vector2(width/2, -height/2));
+            p.Add(new Vector2(width/2, height/2));
+            p.Add(new Vector2(-width/2, height/2));
 
             return p;
 
