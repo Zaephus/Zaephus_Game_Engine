@@ -17,6 +17,26 @@ namespace ZaephusEngine {
 
         public override void Exit() {}
 
+        public Vector2 up {
+            get {
+                Vector2 upVector = new Vector2(
+                        Vector2.up.x * MathF.Cos(rotation) - Vector2.up.y * MathF.Sin(rotation),
+                        Vector2.up.x * MathF.Sin(rotation) + Vector2.up.y * MathF.Cos(rotation)
+                );
+                return upVector.normalized;
+            }
+        }
+
+        public Vector2 right {
+            get {
+                Vector2 rightVector = new Vector2(
+                        Vector2.right.x * MathF.Cos(rotation) - Vector2.right.y * MathF.Sin(rotation),
+                        Vector2.right.x * MathF.Sin(rotation) + Vector2.right.y * MathF.Cos(rotation)
+                );
+                return rightVector.normalized;
+            }
+        }
+
     }
 
 }

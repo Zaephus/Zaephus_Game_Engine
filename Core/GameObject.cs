@@ -13,7 +13,20 @@ namespace ZaephusEngine {
 
         public GameObject(float _x, float _y) {
             transform.position = new Vector2(_x, _y);
+            transform.rotation = 0;
             transform.scale = Vector2.one;
+        }
+
+        public GameObject(float _x, float _y, float _r) {
+            transform.position = new Vector2(_x, _y);
+            transform.rotation = _r;
+            transform.scale = Vector2.one;
+        }
+
+        public GameObject(float _x, float _y, float _r, float _w, float _h) {
+            transform.position = new Vector2(_x, _y);
+            transform.rotation = _r;
+            transform.scale = new Vector2(_w, _h);
         }
 
         public void Initialize(params Component[] _components) {

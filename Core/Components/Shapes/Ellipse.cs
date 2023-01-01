@@ -32,8 +32,6 @@ namespace ZaephusEngine {
             
             //Mid Point Ellipse Algorithm: https://www.geeksforgeeks.org/midpoint-ellipse-drawing-algorithm/#:~:text=Midpoint%20ellipse%20algorithm%20plots(finds,x2ry2
 
-            Console.WriteLine("Generated a shape");
-
             float shapeWidth = horRadius * transform.scale.x;
             float shapeHeight = verRadius * transform.scale.y;
 

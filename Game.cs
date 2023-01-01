@@ -7,22 +7,33 @@ using ZaephusEngine;
 public class Game {
 
     GameObject gameObject = new GameObject(200, 200);
+    GameObject test = new GameObject(200, 200);
+    GameObject test2 = new GameObject(200, 200);
 
     public void Start() {
-        gameObject.Initialize(new Rectangle(gameObject.transform, Colour.magenta),
-                              new Ellipse(gameObject.transform, Colour.green),
-                              new Hexagon(gameObject.transform, Colour.black));
+        gameObject.Initialize(new Hexagon(gameObject.transform, Colour.black));
         gameObject.Start();
+        test.Initialize(new Ellipse(test.transform, Colour.red));
+        test.Start();
+        test.transform.scale = new Vector2(0.2f, 0.2f);
+        test2.Initialize(new Ellipse(test2.transform, Colour.red));
+        test2.Start();
+        test2.transform.scale = new Vector2(0.2f, 0.2f);
     }
 
     public void Update() {
         gameObject.Update();
-        gameObject.transform.scale *= 1.001f;
         gameObject.transform.rotation += 0.001f;
+        test.transform.position = gameObject.transform.position + (gameObject.transform.up * 50);
+        test.Update();
+        test2.transform.position = gameObject.transform.position + (gameObject.transform.right * 50);
+        test2.Update();
     }
 
     public void Exit() {
         gameObject.Exit();
+        test.Exit();
+        test2.Exit();
     }
 
 }
