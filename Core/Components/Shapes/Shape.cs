@@ -21,8 +21,8 @@ namespace ZaephusEngine {
 
         protected Colour colour;
 
-        public Shape(Transform _transform) {
-            transform = _transform;
+        public Shape(GameObject _parent) : base(_parent) {
+            transform = _parent.transform;
             Window.shapes.Add(this);
         }
         

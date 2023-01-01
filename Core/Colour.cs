@@ -36,7 +36,7 @@ public struct Colour {
         return ((Vector4)this).GetHashCode();
     }
 
-    public override bool Equals(object? _other) {
+    public override bool Equals(object _other) {
         if(!(_other is Colour)) {
             return false;
         }

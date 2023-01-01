@@ -11,12 +11,12 @@ public class Game {
     GameObject test2 = new GameObject(200, 200);
 
     public void Start() {
-        gameObject.Initialize(new Hexagon(gameObject.transform, Colour.black));
+        gameObject.Initialize(new Hexagon(gameObject, Colour.black));
         gameObject.Start();
-        test.Initialize(new Ellipse(test.transform, Colour.red));
+        test.Initialize(new Ellipse(test, Colour.red));
         test.Start();
         test.transform.scale = new Vector2(0.2f, 0.2f);
-        test2.Initialize(new Ellipse(test2.transform, Colour.red));
+        test2.Initialize(new Ellipse(test2, Colour.red));
         test2.Start();
         test2.transform.scale = new Vector2(0.2f, 0.2f);
     }

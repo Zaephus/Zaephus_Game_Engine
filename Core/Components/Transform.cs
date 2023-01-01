@@ -11,6 +11,8 @@ namespace ZaephusEngine {
         public float rotation { get; set; }
         public Vector2 scale { get; set; }
 
+        public Transform(GameObject _parent) : base(_parent) {}
+
         public override void Start() {}
 
         public override void Update() {}

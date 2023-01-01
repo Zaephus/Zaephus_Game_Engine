@@ -10,7 +10,7 @@ namespace ZaephusEngine {
 
         private List<Vector2> p = new List<Vector2>();
 
-        public Polygon(Transform _transform, params Vector2[] _points) : base(_transform) {
+        public Polygon(GameObject _parent, params Vector2[] _points) : base(_parent) {
 
             drawType = DrawType.Lines;
 
@@ -20,7 +20,7 @@ namespace ZaephusEngine {
             basePoints = GenerateShape();
         }
 
-        public Polygon(Transform _transform, Colour _c, params Vector2[] _points) : base(_transform) {
+        public Polygon(GameObject _parent, Colour _c, params Vector2[] _points) : base(_parent) {
             colour = _c;
 
             drawType = DrawType.Lines;

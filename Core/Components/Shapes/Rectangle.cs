@@ -11,7 +11,7 @@ namespace ZaephusEngine {
         private float width = 100;
         private float height = 100;
 
-        public Rectangle(Transform _transform) : base(_transform) {
+        public Rectangle(GameObject _parent) : base(_parent) {
 
             drawType = DrawType.Lines;
             
@@ -19,7 +19,7 @@ namespace ZaephusEngine {
             basePoints = GenerateShape();
         }
 
-        public Rectangle(Transform _transform, Colour _c) : base(_transform) {
+        public Rectangle(GameObject _parent, Colour _c) : base(_parent) {
 
             colour = _c;
 

@@ -11,7 +11,7 @@ namespace ZaephusEngine {
         private float horRadius = 50;
         private float verRadius = 50;
 
-        public Ellipse(Transform _transform) : base(_transform) {
+        public Ellipse(GameObject _parent) : base(_parent) {
 
             drawType = DrawType.Points;
             
@@ -19,7 +19,7 @@ namespace ZaephusEngine {
             basePoints = GenerateShape();
         }
 
-        public Ellipse(Transform _transform, Colour _c) : base(_transform) {
+        public Ellipse(GameObject _parent, Colour _c) : base(_parent) {
             colour = _c;
 
             drawType = DrawType.Points;

@@ -42,7 +42,7 @@ namespace ZaephusEngine {
             return x.GetHashCode() ^ (y.GetHashCode() << 2) ^ (z.GetHashCode() >> 2) ^ (w.GetHashCode() >> 1);
         }
 
-        public override bool Equals(object? _other) {
+        public override bool Equals(object _other) {
             if(!(_other is Vector4)) {
                 return false;
             }

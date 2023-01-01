@@ -64,7 +64,7 @@ namespace ZaephusEngine {
             return x.GetHashCode() ^ (y.GetHashCode() << 2);
         }
 
-        public override bool Equals(object? _other) {
+        public override bool Equals(object _other) {
             if(!(_other is Vector2Int)) {
                 return false;
             }

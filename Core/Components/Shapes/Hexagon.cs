@@ -10,7 +10,7 @@ namespace ZaephusEngine {
         
         public float radius = 50;
 
-        public Hexagon(Transform _transform) : base(_transform) {
+        public Hexagon(GameObject _parent) : base(_parent) {
 
             drawType = DrawType.Lines;
             
@@ -18,7 +18,7 @@ namespace ZaephusEngine {
             basePoints = GenerateShape();
         }
 
-        public Hexagon(Transform _transform, Colour _c) : base(_transform) {
+        public Hexagon(GameObject _parent, Colour _c) : base(_parent) {
             colour = _c;
 
             drawType = DrawType.Lines;
