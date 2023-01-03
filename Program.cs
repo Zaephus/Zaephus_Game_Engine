@@ -7,18 +7,16 @@ using ZaephusEngine;
 
 // SDL2 for CSharp via https://github.com/flibitijibibo/SDL2-CS
 // Install package via https://www.nuget.org/packages/Sayers.SDL2.Core/
-// Tutorial at https://jsayers.dev/c-sdl-tutorial-part-3-drawing-shapes/
+// Tutorial at https://jsayers.dev/c-sdl-tutorial-part-3-drawing-shapes/=
 
-Game game = new Game();
-
-game.Start();
+Game.Start();
 Window.Setup();
 
 while(Window.running) {
     Window.PollEvents();
-    game.Update();
+    Game.Update();
     Window.Render();
 }
 
-game.Exit();
+Game.Exit();
 Window.CleanUp();

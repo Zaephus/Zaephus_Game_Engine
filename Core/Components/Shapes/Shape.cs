@@ -30,31 +30,36 @@ namespace ZaephusEngine {
 
         public override void Update() {
 
-            if(drawType == DrawType.Points) {
+            switch(drawType) {
 
-                points = GenerateShape();
-                basePoints = GenerateShape();
+                case DrawType.Points:
 
-                for(int i = 0; i < points.Count; i++) {
+                    points = GenerateShape();
+                    basePoints = GenerateShape();
 
-                    points[i] = new Vector2(
-                        basePoints[i].x * MathF.Cos(transform.rotation) - basePoints[i].y * MathF.Sin(transform.rotation),
-                        basePoints[i].x * MathF.Sin(transform.rotation) + basePoints[i].y * MathF.Cos(transform.rotation)
-                    );
+                    for(int i = 0; i < points.Count; i++) {
 
-                }
+                        points[i] = new Vector2(
+                            basePoints[i].x * MathF.Cos(transform.rotation) - basePoints[i].y * MathF.Sin(transform.rotation),
+                            basePoints[i].x * MathF.Sin(transform.rotation) + basePoints[i].y * MathF.Cos(transform.rotation)
+                        );
 
-            }
-            else {
+                    }
 
-                for(int i = 0; i < points.Count; i++) {
+                    break;
 
-                    points[i] = new Vector2(
-                        transform.scale.x * (basePoints[i].x * MathF.Cos(transform.rotation) - basePoints[i].y * MathF.Sin(transform.rotation)),
-                        transform.scale.y * (basePoints[i].x * MathF.Sin(transform.rotation) + basePoints[i].y * MathF.Cos(transform.rotation))
-                    );
+                case DrawType.Lines:
 
-                }
+                    for(int i = 0; i < points.Count; i++) {
+                        
+                        points[i] = new Vector2(
+                            transform.scale.x * (basePoints[i].x * MathF.Cos(transform.rotation) - basePoints[i].y * MathF.Sin(transform.rotation)),
+                            transform.scale.y * (basePoints[i].x * MathF.Sin(transform.rotation) + basePoints[i].y * MathF.Cos(transform.rotation))
+                        );
+
+                    }
+
+                    break;
 
             }
 
@@ -69,9 +74,7 @@ namespace ZaephusEngine {
                 switch(drawType) {
 
                     case DrawType.Points:
-                        foreach(Vector2 point in points) {
-                            SDL_RenderDrawPoint(Window.renderer, (int)(transform.position.x + point.x), (int)(transform.position.y + point.y));
-                        }
+                        SDL_RenderDrawPoint(Window.renderer, (int)(transform.position.x + points[i].x), (int)(transform.position.y + points[i].y));
                         break;
 
                     case DrawType.Lines:

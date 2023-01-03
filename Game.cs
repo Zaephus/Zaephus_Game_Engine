@@ -3,37 +3,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ZaephusEngine;
+using static SDL2.SDL;
 
-public class Game {
+public static class Game {
 
-    GameObject gameObject = new GameObject(200, 200);
-    GameObject test = new GameObject(200, 200);
-    GameObject test2 = new GameObject(200, 200);
+    public static List<Collider> colliders = new List<Collider>();
 
-    public void Start() {
-        gameObject.Initialize(new Hexagon(gameObject, Colour.black));
-        gameObject.Start();
-        test.Initialize(new Ellipse(test, Colour.red));
-        test.Start();
-        test.transform.scale = new Vector2(0.2f, 0.2f);
-        test2.Initialize(new Ellipse(test2, Colour.red));
-        test2.Start();
-        test2.transform.scale = new Vector2(0.2f, 0.2f);
+    private static GameObject box = new GameObject(100, 200);
+
+    private static GameObject leftBound = new GameObject(550, 240, 0 , 0.2f, 3);
+
+    private static BoxCollider bc;
+
+    public static void Start() {
+
+        box.Initialize(new Rectangle(box, Colour.yellow),
+                       new BoxCollider(box));
+        box.Start();
+
+        bc = box.GetComponent(typeof(BoxCollider)) as BoxCollider;
+
+        //leftBound.Initialize(new Rectangle(leftBound, Colour.black),
+                            // new BoxCollider(leftBound));
+        //leftBound.Start();
+
+        Console.WriteLine(colliders.Count);
+
     }
 
-    public void Update() {
-        gameObject.Update();
-        gameObject.transform.rotation += 0.001f;
-        test.transform.position = gameObject.transform.position + (gameObject.transform.up * 50);
-        test.Update();
-        test2.transform.position = gameObject.transform.position + (gameObject.transform.right * 50);
-        test2.Update();
+    public static void Update() {
+
+        Vector2Int mousePos;
+
+        SDL_GetMouseState(out mousePos.x, out mousePos.y);
+
+        //bc.Update();
+
+        box.transform.rotation += 0.05f;
+
+        box.Update();
+        Console.WriteLine(bc.OverlapPoint(new Vector2(mousePos.x, mousePos.y)));
+        //box.transform.position += new Vector2(1.6f, 0);
+        //leftBound.Update();
+
     }
 
-    public void Exit() {
-        gameObject.Exit();
-        test.Exit();
-        test2.Exit();
+    public static void Exit() {
+
+        box.Exit();
+        //leftBound.Exit();
+
     }
 
 }
