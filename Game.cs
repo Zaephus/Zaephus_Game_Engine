@@ -23,11 +23,17 @@ public static class Game {
 
         bc = box.GetComponent(typeof(BoxCollider)) as BoxCollider;
 
-        //leftBound.Initialize(new Rectangle(leftBound, Colour.black),
-                            // new BoxCollider(leftBound));
-        //leftBound.Start();
+        //box.Update();
+        //bc.Update();
+        //bc.CheckCollision(colliders.ToArray());
 
-        Console.WriteLine(colliders.Count);
+        //box.transform.rotation = 1;
+
+        leftBound.Initialize(new Rectangle(leftBound, Colour.black),
+                            new BoxCollider(leftBound));
+        leftBound.Start();
+
+        //Console.WriteLine(colliders.Count);
 
     }
 
@@ -39,19 +45,20 @@ public static class Game {
 
         //bc.Update();
 
-        box.transform.rotation += 0.05f;
+        box.transform.rotation += 0.005f;
 
         box.Update();
-        Console.WriteLine(bc.OverlapPoint(new Vector2(mousePos.x, mousePos.y)));
-        //box.transform.position += new Vector2(1.6f, 0);
-        //leftBound.Update();
+        //Console.WriteLine(bc.OverlapPoint(new Vector2(mousePos.x, mousePos.y)));
+        Console.WriteLine(bc.CheckCollision(colliders.ToArray()));
+        box.transform.position += new Vector2(1.6f, 0);
+        leftBound.Update();
 
     }
 
     public static void Exit() {
 
         box.Exit();
-        //leftBound.Exit();
+        leftBound.Exit();
 
     }
 

@@ -7,10 +7,13 @@ namespace ZaephusEngine {
 
     public class BoxCollider : Collider {
 
-        public Vector2 position;
-        public Vector2 size;
+        private Vector2 position;
+        private float rotation;
+        private Vector2 size;
 
-        private Vector2 lastPosition = Vector2.zero;
+        private Vector2 lastPosition;
+        private float lastRotation;
+
         private bool isColliding = false;
 
         public BoxCollider(GameObject _parent) : base(_parent) {
@@ -18,21 +21,26 @@ namespace ZaephusEngine {
         }
 
         public override void Start() {
-
+            position = parent.transform.position;
+            rotation = parent.transform.rotation;
+            size = 100 * parent.transform.scale;
         }
 
         public override void Update() {
 
             if(!isColliding) {
                 lastPosition = new Vector2(position.x, position.y);
+                lastRotation = rotation;
             }
 
             position = parent.transform.position;
+            rotation = parent.transform.rotation;
             size = 100 * parent.transform.scale;
 
-            if(CheckCollision()) {
+            if(CheckCollision(Game.colliders.ToArray())) {
                 isColliding = true;
                 parent.transform.position = lastPosition;
+                parent.transform.rotation = lastRotation;
             }
             else {
                 isColliding = false;
@@ -40,7 +48,41 @@ namespace ZaephusEngine {
 
         }
 
-        public override void Exit() {
+        public override void Exit() {}
+
+        public override bool CheckCollision(params Collider[] _colliders) {
+
+            int resolution = 2;
+
+            List<Vector2> points = new List<Vector2>();
+            Vector2[] verteces = GetVerteces();
+
+            for(int i = 0; i < verteces.Length; i++) {
+                Vector2 pointA = verteces[i];
+                Vector2 diff = verteces[(i + 1) % verteces.Length] - pointA;
+
+                points.Add(pointA);
+
+                for(int j = 1; j <= resolution; j++) {
+                    Vector2 intermediate = pointA + (diff.normalized * ((diff.magnitude / (resolution + 1)) * j));
+                    points.Add(intermediate);
+                }
+
+            }
+
+            foreach(Collider c in _colliders) {
+                if(c == this) {
+                    continue;
+                }
+
+                foreach(Vector2 point in points) {
+                    if(c.OverlapPoint(point)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
 
         }
 
@@ -49,38 +91,12 @@ namespace ZaephusEngine {
             //Reference for finding a point within a polygonal shape: 
             //https://stackoverflow.com/questions/2752725/finding-whether-a-point-lies-inside-a-rectangle-or-not#:~:text=In%20any%20case,%20for%20any,test%20-%20the%20point%20is%20inside.
 
-            Vector2 pointA = new Vector2(size.x / 2, size.y / 2);
-            pointA = new Vector2(
-                pointA.x * MathF.Cos(parent.transform.rotation) - pointA.y * MathF.Sin(parent.transform.rotation),
-                pointA.x * MathF.Sin(parent.transform.rotation) + pointA.y * MathF.Cos(parent.transform.rotation)
-            );
-            pointA += position;
+            Vector2[] points = GetVerteces();
 
-            Vector2 pointB = new Vector2(-size.x / 2, size.y / 2);
-            pointB = new Vector2(
-                pointB.x * MathF.Cos(parent.transform.rotation) - pointB.y * MathF.Sin(parent.transform.rotation),
-                pointB.x * MathF.Sin(parent.transform.rotation) + pointB.y * MathF.Cos(parent.transform.rotation)
-            );
-            pointB += position;
-
-            Vector2 pointC = new Vector2(-size.x / 2, -size.y / 2);
-            pointC = new Vector2(
-                pointC.x * MathF.Cos(parent.transform.rotation) - pointC.y * MathF.Sin(parent.transform.rotation),
-                pointC.x * MathF.Sin(parent.transform.rotation) + pointC.y * MathF.Cos(parent.transform.rotation)
-            );
-            pointC += position;
-
-            Vector2 pointD = new Vector2(size.x / 2, -size.y / 2);
-            pointD = new Vector2(
-                pointD.x * MathF.Cos(parent.transform.rotation) - pointD.y * MathF.Sin(parent.transform.rotation),
-                pointD.x * MathF.Sin(parent.transform.rotation) + pointD.y * MathF.Cos(parent.transform.rotation)
-            );
-            pointD += position;
-
-            float dAB = (pointB.x - pointA.x) * (_point.y - pointA.y) - (_point.x - pointA.x) * (pointB.y - pointA.y);
-            float dBC = (pointC.x - pointB.x) * (_point.y - pointB.y) - (_point.x - pointB.x) * (pointC.y - pointB.y);
-            float dCD = (pointD.x - pointC.x) * (_point.y - pointC.y) - (_point.x - pointC.x) * (pointD.y - pointC.y);
-            float dDA = (pointA.x - pointD.x) * (_point.y - pointD.y) - (_point.x - pointD.x) * (pointA.y - pointD.y);
+            float dAB = (points[1].x - points[0].x) * (_point.y - points[0].y) - (_point.x - points[0].x) * (points[1].y - points[0].y);
+            float dBC = (points[2].x - points[1].x) * (_point.y - points[1].y) - (_point.x - points[1].x) * (points[2].y - points[1].y);
+            float dCD = (points[3].x - points[2].x) * (_point.y - points[2].y) - (_point.x - points[2].x) * (points[3].y - points[2].y);
+            float dDA = (points[0].x - points[3].x) * (_point.y - points[3].y) - (_point.x - points[3].x) * (points[0].y - points[3].y);
 
             if(dAB >= 0 && dBC >= 0 && dCD >= 0 && dDA >= 0) {
                 return true;
@@ -90,23 +106,24 @@ namespace ZaephusEngine {
 
         }
 
-        public override bool CheckCollision() {
+        private Vector2[] GetVerteces() {
 
-            foreach(Collider c in Game.colliders) {
-                if(c == this) {
-                    continue;
-                }
-                if(c is BoxCollider) {
-                    BoxCollider bc = c as BoxCollider;
-                    if((position.x + size.x/2) >= (bc.position.x - bc.size.x/2) && (position.x - size.x/2) <= (bc.position.x + bc.size.x/2)) {
-                        if((position.y + size.y/2) >= (bc.position.y - bc.size.y/2) && (position.y - size.y/2) <= (bc.position.y + bc.size.y/2)) {
-                            return true;
-                        }
-                    }
-                }
-                
+            Vector2[] verteces = new Vector2[4];
+
+            verteces[0] = (new Vector2(size.x / 2, size.y / 2));
+            verteces[1] = (new Vector2(-size.x / 2, size.y / 2));
+            verteces[2] = (new Vector2(-size.x / 2, -size.y / 2));
+            verteces[3] = (new Vector2(size.x / 2, -size.y / 2));
+
+            for(int i = 0; i < verteces.Length; i++) {
+                verteces[i] = new Vector2(
+                    verteces[i].x * MathF.Cos(rotation) - verteces[i].y * MathF.Sin(rotation),
+                    verteces[i].x * MathF.Sin(rotation) + verteces[i].y * MathF.Cos(rotation)
+                );
+                verteces[i] += position;
             }
-            return false;
+
+            return verteces;
 
         }
 
