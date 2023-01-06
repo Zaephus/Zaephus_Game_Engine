@@ -13,27 +13,15 @@ public static class Game {
 
     private static GameObject leftBound = new GameObject(550, 240, 0 , 0.2f, 3);
 
-    private static BoxCollider bc;
-
     public static void Start() {
 
         box.Initialize(new Rectangle(box, Colour.yellow),
                        new BoxCollider(box));
         box.Start();
 
-        bc = box.GetComponent(typeof(BoxCollider)) as BoxCollider;
-
-        //box.Update();
-        //bc.Update();
-        //bc.CheckCollision(colliders.ToArray());
-
-        //box.transform.rotation = 1;
-
         leftBound.Initialize(new Rectangle(leftBound, Colour.black),
                             new BoxCollider(leftBound));
         leftBound.Start();
-
-        //Console.WriteLine(colliders.Count);
 
     }
 
@@ -43,13 +31,9 @@ public static class Game {
 
         SDL_GetMouseState(out mousePos.x, out mousePos.y);
 
-        //bc.Update();
-
         box.transform.rotation += 0.005f;
 
         box.Update();
-        //Console.WriteLine(bc.OverlapPoint(new Vector2(mousePos.x, mousePos.y)));
-        Console.WriteLine(bc.CheckCollision(colliders.ToArray()));
         box.transform.position += new Vector2(1.6f, 0);
         leftBound.Update();
 

@@ -11,9 +11,6 @@ namespace ZaephusEngine {
         private float rotation;
         private Vector2 size;
 
-        private Vector2 lastPosition;
-        private float lastRotation;
-
         private bool isColliding = false;
 
         public BoxCollider(GameObject _parent) : base(_parent) {
@@ -28,29 +25,15 @@ namespace ZaephusEngine {
 
         public override void Update() {
 
-            if(!isColliding) {
-                lastPosition = new Vector2(position.x, position.y);
-                lastRotation = rotation;
-            }
-
             position = parent.transform.position;
             rotation = parent.transform.rotation;
             size = 100 * parent.transform.scale;
-
-            if(CheckCollision(Game.colliders.ToArray())) {
-                isColliding = true;
-                parent.transform.position = lastPosition;
-                parent.transform.rotation = lastRotation;
-            }
-            else {
-                isColliding = false;
-            }
 
         }
 
         public override void Exit() {}
 
-        public override bool CheckCollision(params Collider[] _colliders) {
+        public override void CheckCollision(params Collider[] _colliders) {
 
             int resolution = 2;
 
@@ -75,14 +58,20 @@ namespace ZaephusEngine {
                     continue;
                 }
 
+                List<Vector2> collisionPoints = new List<Vector2>();
+
                 foreach(Vector2 point in points) {
                     if(c.OverlapPoint(point)) {
-                        return true;
+                        collisionPoints.Add(point);
                     }
                 }
+                
+                if(collisionPoints.Count > 0) {
+                    OnCollision?.Invoke(new CollisionInfo(c, collisionPoints.ToArray()));
+                    return;
+                }
+                
             }
-
-            return false;
 
         }
 

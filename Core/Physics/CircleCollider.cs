@@ -23,8 +23,7 @@ namespace ZaephusEngine {
 
         }
 
-        public override bool CheckCollision(params Collider[] _colliders) {
-            return false;
+        public override void CheckCollision(params Collider[] _colliders) {
         }
 
         public override bool OverlapPoint(Vector2 _point) {
