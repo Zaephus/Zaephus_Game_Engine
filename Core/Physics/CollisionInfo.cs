@@ -9,7 +9,7 @@ namespace ZaephusEngine {
 
         public Collider otherCollider;
 
-        public List<Vector2> collidedPoints;
+        public List<Vector2> collidedPoints = new List<Vector2>();
 
         public CollisionInfo(Collider _collider, params Vector2[] _points) {
             otherCollider = _collider;

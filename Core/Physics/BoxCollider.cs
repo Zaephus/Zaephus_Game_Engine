@@ -11,8 +11,6 @@ namespace ZaephusEngine {
         private float rotation;
         private Vector2 size;
 
-        private bool isColliding = false;
-
         public BoxCollider(GameObject _parent) : base(_parent) {
             Game.colliders.Add(this);
         }
@@ -28,6 +26,8 @@ namespace ZaephusEngine {
             position = parent.transform.position;
             rotation = parent.transform.rotation;
             size = 100 * parent.transform.scale;
+
+            CheckCollision(Game.colliders.ToArray());
 
         }
 
@@ -68,7 +68,6 @@ namespace ZaephusEngine {
                 
                 if(collisionPoints.Count > 0) {
                     OnCollision?.Invoke(new CollisionInfo(c, collisionPoints.ToArray()));
-                    return;
                 }
                 
             }
