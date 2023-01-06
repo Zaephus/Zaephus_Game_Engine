@@ -7,7 +7,7 @@ namespace ZaephusEngine {
 
     public abstract class Component {
 
-        protected GameObject parent;
+        public GameObject parent;
 
         public Component(GameObject _parent) {
             parent = _parent;
