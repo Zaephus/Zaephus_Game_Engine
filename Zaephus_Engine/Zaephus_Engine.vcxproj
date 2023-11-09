@@ -159,9 +159,13 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Material.cpp" />
+    <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\RenderDebug.cpp" />
+    <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="Core\MeshRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ShaderCompile.bat" />
@@ -169,7 +173,11 @@
     <None Include="Shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Material.h" />
+    <ClInclude Include="Core\Mesh.h" />
+    <ClInclude Include="Core\MeshRenderer.h" />
     <ClInclude Include="Core\RenderDebug.h" />
+    <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

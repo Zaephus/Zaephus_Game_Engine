@@ -9,9 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{987d4e40-ff41-4cba-bb55-b7b0144d0634}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -24,16 +23,28 @@
     <ClCompile Include="Core\RenderDebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\MeshRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ShaderCompile.bat">
-      <Filter>Source Files</Filter>
+    <None Include="Shaders\shader.vert">
+      <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\shader.frag">
-      <Filter>Source Files</Filter>
+      <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\shader.vert">
-      <Filter>Source Files</Filter>
+    <None Include="ShaderCompile.bat">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +52,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\RenderDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MeshRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
