@@ -1,0 +1,6 @@
+{
+    "g++" : "C:/msys64/ucrt64/bin",
+    "glfw" : "A:/Libraries/glfw-3.3.8.bin.WIN64",
+    "glm" : "A:/Libraries/glm",
+    "stb_image" : "A:/Libraries/STB_Image"
+}

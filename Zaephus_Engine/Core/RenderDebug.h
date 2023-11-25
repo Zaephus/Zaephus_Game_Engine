@@ -4,10 +4,11 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include <iostream>
+#include <iosfwd>
 #include <stdexcept>
 #include <cstdlib>
 #include <vector>
+#include <cstring>
 
 class RenderDebug {
 

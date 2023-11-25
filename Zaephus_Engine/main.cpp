@@ -674,8 +674,8 @@ private:
 
 	void createGraphicsPipeline() {
 
-		std::vector<char> vertShaderCode = readFile("Shaders/shader_vert.spv");
-		std::vector<char> fragShaderCode = readFile("Shaders/shader_frag.spv");
+		std::vector<char> vertShaderCode = readFile("Bin/Shaders/shader_vert.spv");
+		std::vector<char> fragShaderCode = readFile("Bin/Shaders/shader_frag.spv");
 
 		VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
 		VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);

@@ -1,0 +1,70 @@
+{
+    "tasks": [
+        {
+            "label": "Build Application",
+            "dependsOn": [
+                "Link Source Code",
+                "Compile Shaders"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Compile Source Code",
+            "command": ".\\SourceCompile.bat",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "args": [
+                "${workspaceFolder}",
+                "${config:g++}",
+                "%VULKAN_SDK%/Include",
+                "${config:glfw}/include",
+                "${config:glm}",
+                "${config:stb_image}"
+            ],
+            "group": "build",
+            "detail": "Compiles all C++ files in directory!"
+        },
+        {
+            "type": "shell",
+            "label": "Link Source Code",
+            "command": ".\\SourceLink.bat",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "args": [
+                "${workspaceFolder}",
+                "${config:g++}",
+                "%VULKAN_SDK%/Lib",
+                "${config:glfw}/lib-mingw-w64"
+            ],
+            "group": "build",
+            "dependsOn": [
+                "Compile Source Code"
+            ],
+            "detail": "Links all generated object files!"
+        },
+        {
+            "type": "shell",
+            "label": "Compile Shaders",
+            "command": ".\\ShaderCompile.bat",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "args": [
+                "${workspaceFolder}",
+                "%VULKAN_SDK%"
+            ],
+            "group": "build",
+            "detail": "Compiles all shaders!"
+        }
+    ],
+    "version": "2.0.0"
+}

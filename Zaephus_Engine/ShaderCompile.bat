@@ -1,9 +1,40 @@
 @echo off
+setlocal enableDelayedExpansion
 
-for /r %1 %%g in (*.frag) do (
-	%2\Bin\glslc.exe %%g -o %%~pg%%~ng_frag.spv
+echo Compiling Shaders...
+
+for /r %1 %%A in (*.frag) do (
+    echo Found file: %%~nA%%~xA
+
+	set sourceTimeStamp=%%~tA
+
+	set targetPath=Bin/Shaders/%%~nA_frag.spv
+	for %%X in (!targetPath!) do (
+		set outputTimeStamp=%%~tX
+	)
+
+	if !sourceTimeStamp! GTR !outputTimeStamp! (
+		%2\Bin\glslc.exe %%A -o !targetPath!
+	) else (
+		echo %%~nA%%~xA did not need to be recompiled.
+	)
 )
 
-for /r %1 %%g in (*.vert) do (
-	%2\Bin\glslc.exe %%g -o %%~pg%%~ng_vert.spv
+for /r %1 %%A in (*.vert) do (
+	echo Found file: %%~nA%%~xA
+
+	set sourceTimeStamp=%%~tA
+
+	set targetPath=Bin/Shaders/%%~nA_vert.spv
+	for %%X in (!targetPath!) do (
+		set outputTimeStamp=%%~tX
+	)
+
+	if !sourceTimeStamp! GTR !outputTimeStamp! (
+		%2\Bin\glslc.exe %%A -o !targetPath!
+	) else (
+		echo %%~nA%%~xA did not need to be recompiled.
+	)
 )
+
+echo Finished Compiling Shaders.

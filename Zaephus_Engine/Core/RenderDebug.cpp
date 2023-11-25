@@ -1,6 +1,7 @@
 
 #pragma warning(disable : 26495)
 
+#include <iostream>
 #include "RenderDebug.h"
 
 RenderDebug::RenderDebug(VkInstance* _instance) {
