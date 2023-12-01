@@ -9,7 +9,12 @@
             "symbolSearchPath": "C:/Symbols;C:/SymbolDir2",
             "console": "internalConsole",
             "cwd": "${workspaceFolder}",
-            "preLaunchTask": "Build Application"
+            "preLaunchTask": "Build Application",
+            "presentation": {
+                "hidden": false,
+                "group": "",
+                "order": 1
+            }
         }
     ]
 }
