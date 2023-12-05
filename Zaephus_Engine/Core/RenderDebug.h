@@ -13,6 +13,7 @@
 class RenderDebug {
 
 public:
+
 	const std::vector<const char*> validationLayers = {
 		"VK_LAYER_KHRONOS_validation"
 	};
@@ -26,6 +27,7 @@ public:
 	bool checkValidationLayerSupport();
 
 private:
+
 	VkInstance* instance;
 	VkDebugUtilsMessengerEXT debugMessenger;
 

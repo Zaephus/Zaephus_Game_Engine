@@ -19,5 +19,8 @@
     "cSpell.ignoreWords": [
         "SFLOAT",
         "Zaephus"
-    ]
+    ],
+    "files.associations": {
+        "stdexcept": "cpp"
+    }
 }
