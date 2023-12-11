@@ -13,11 +13,11 @@ for /r %1 %%A in (*.cpp) do (
 		set outputTimeStamp=%%~tX
 	)
 
-	if !sourceTimeStamp! GTR !outputTimeStamp! (
-        %2/g++.exe -O0 -g -I%1 -I%3 -I%4 -I%5 -I%6 -c -o Bin/%%~nA.o %%~pA%%~nA%%~xA
-    ) else (
-        echo %%~nA%%~xA did not need to be recompiled.
-    )
+    %2/g++.exe -O0 -g -I%1 -I%3 -I%4 -I%5 -I%6 -c -o Bin/%%~nA.o %%~pA%%~nA%%~xA
+	@REM if !sourceTimeStamp! GTR !outputTimeStamp! (
+    @REM ) else (
+    @REM     echo %%~nA%%~xA did not need to be recompiled.
+    @REM )
 )
 
 for /r %1 %%A in (*.c) do (

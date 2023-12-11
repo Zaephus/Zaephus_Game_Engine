@@ -24,7 +24,7 @@ class Device {
         VkQueue graphicsQueue;
         VkQueue presentQueue;
 
-        SwapChainSupportDetails swapChainSupportDetails;
+        SwapchainSupportDetails swapchainSupportDetails;
         QueueFamilyIndices queueFamilyIndices;
 
         Device(VkInstance* _instance, RenderDebug* _renderingDebugger, VkSurfaceKHR* _surface);
@@ -42,7 +42,7 @@ class Device {
         void createLogicalDevice(bool _enableValidationLayers);
         bool isDeviceSuitable(VkPhysicalDevice _device);
         bool checkDeviceExtensionSupport(VkPhysicalDevice _device);
-        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice _device);
+        SwapchainSupportDetails querySwapchainSupport(VkPhysicalDevice _device);
         QueueFamilyIndices findQueueFamilies(VkPhysicalDevice _device);
 
 };

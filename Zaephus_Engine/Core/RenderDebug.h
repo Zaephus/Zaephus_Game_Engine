@@ -21,7 +21,7 @@ public:
 	RenderDebug(VkInstance* _instance);
 	void cleanup();
 
-	void setupDebugMessenger();
+	void initialize();
 
 	void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 	bool checkValidationLayerSupport();

@@ -12,7 +12,7 @@ void RenderDebug::cleanup() {
 	destroyDebugUtilsMessengerEXT(nullptr);
 }
 
-void RenderDebug::setupDebugMessenger() {
+void RenderDebug::initialize() {
 
 	VkDebugUtilsMessengerCreateInfoEXT createInfo{};
 	populateDebugMessengerCreateInfo(createInfo);

@@ -39,7 +39,7 @@ void Device::pickPhysicalDevice() {
         throw std::runtime_error("Failed to find a suitable GPU!");
     }
 
-    swapChainSupportDetails = querySwapChainSupport(physicalDevice);
+    swapchainSupportDetails = querySwapchainSupport(physicalDevice);
     queueFamilyIndices = findQueueFamilies(physicalDevice);
 
 }
@@ -96,16 +96,16 @@ bool Device::isDeviceSuitable(VkPhysicalDevice _device) {
 
     bool extensionsSupported = checkDeviceExtensionSupport(_device);
 
-    bool swapChainAdequate = false;
+    bool swapchainAdequate = false;
     if(extensionsSupported) {
-        SwapChainSupportDetails swapChainSupport = querySwapChainSupport(_device);
-        swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+        SwapchainSupportDetails swapchainSupport = querySwapchainSupport(_device);
+        swapchainAdequate = !swapchainSupport.formats.empty() && !swapchainSupport.presentModes.empty();
     }
 
     VkPhysicalDeviceFeatures supportedFeatures;
     vkGetPhysicalDeviceFeatures(_device, &supportedFeatures);
 
-    return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
+    return indices.isComplete() && extensionsSupported && swapchainAdequate && supportedFeatures.samplerAnisotropy;
 
 }
 
@@ -127,9 +127,9 @@ bool Device::checkDeviceExtensionSupport(VkPhysicalDevice _device) {
 
 }
 
-SwapChainSupportDetails Device::querySwapChainSupport(VkPhysicalDevice _device) {
+SwapchainSupportDetails Device::querySwapchainSupport(VkPhysicalDevice _device) {
 
-    SwapChainSupportDetails details;
+    SwapchainSupportDetails details;
 
     vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_device, *surface, &details.capabilities);
 

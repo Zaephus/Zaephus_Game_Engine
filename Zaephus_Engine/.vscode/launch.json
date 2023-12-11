@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/Build/main.exe",
             "symbolSearchPath": "C:/Symbols;C:/SymbolDir2",
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Build Application",
             "presentation": {
