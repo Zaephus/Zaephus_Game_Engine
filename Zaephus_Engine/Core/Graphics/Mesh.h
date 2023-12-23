@@ -5,6 +5,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <vector>
+
 #include "Core/Structs.h"
 #include "Core/Math/Math.h"
 #include "Core/Graphics/Vertex.h"
@@ -13,23 +15,23 @@ class Mesh {
 
     public:
 
-        const std::vector<Vertex> vertices = {
-            { { -0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-            { { 0.5f,  -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-            { { 0.5f,  0.5f,  0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-            { { -0.5f, 0.5f,  0.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} }
-        };
+        const std::vector<Vector3> vertices;
+        const std::vector<Vector4> vertexColours;
+        const std::vector<Vector2> uvs;
 
-        const std::vector<uint16_t> indices = {
-            0, 1, 2, 2, 3, 0
-        };
+        const std::vector<uint16_t> indices;
 
         UniformBufferObject ubo;
+
+        void initialize();
+        void render();
 
     private:
 
         void createVertexBuffer();
         void createIndexBuffer();
         void updateUniformBuffer();
+
+        const std::vector<Vertex> getVertexList();
 
 };
