@@ -3,6 +3,9 @@ setlocal enableDelayedExpansion
 
 echo Compiling Shaders...
 
+echo %1
+echo %2
+
 for /r %1 %%A in (*.frag) do (
     echo Found file: %%~nA%%~xA
 
