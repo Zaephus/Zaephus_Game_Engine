@@ -14,7 +14,19 @@ add_executable(Zaephus_Engine main.cpp
         Core/Device.cpp
         Core/RenderDebug.cpp
         Core/RenderInstance.cpp
-        Core/Window.cpp)
+        Core/Window.cpp
+        Core/Math/Matrices/Matrix4x4.h
+        Core/Math/Vectors/Vector2.h
+        Core/Math/Vectors/Vector2Int.h
+        Core/Math/Vectors/Vector3.h
+        Core/Math/Vectors/Vector3Int.h
+        Core/Math/Vectors/Vector4.h
+        Core/Math/Vectors/Vector4Int.h
+        Core/Math/Math.h
+        Core/Math/Matrices/Matrix3x3.h
+        Core/Math/Quaternion.h
+        Core/Math/Matrices/Matrix2x2.h
+        Core/Math/MathHelper.h)
 
 find_package(Vulkan REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${Vulkan_INCLUDE_DIRS})

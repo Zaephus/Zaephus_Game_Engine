@@ -2,6 +2,7 @@
 #pragma once
 
 #include <cmath>
+#include <format>
 #include <string>
 
 struct Vector3 {
@@ -10,57 +11,67 @@ struct Vector3 {
     float y;
     float z;
 
-    Vector3(float _x) : Vector3(_x, _x, _x) {}
-    Vector3(float _x, float _y, float _z) {
+    Vector3() {
+        *this = zero();
+    }
+
+    explicit Vector3(const float _x) : Vector3(_x, _x, _x) {}
+    Vector3(const float _x, const float _y, const float _z) {
         x = _x;
         y = _y;
         z = _z;
     }
 
-    inline float magnitude() {
-        return sqrt(x*x + y*y + z*z);
+    Vector3(const Vector3 &_v) {
+        x = _v.x;
+        y = _v.y;
+        z = _v.z;
     }
 
-    inline float squaredMagnitude() {
+    [[nodiscard]] float magnitude() const {
+        return std::sqrt(x*x + y*y + z*z);
+    }
+
+    [[nodiscard]] float squaredMagnitude() const {
         return x*x + y*y + z*z;
     }
 
-    inline Vector3 normalized() {
+    [[nodiscard]] Vector3 normalized() const {
         Vector3 norm = Vector3(x, y, z);
         norm.normalize();
         return norm;
     }
 
-    inline void normalize() {
+    void normalize() {
         *this /= magnitude();
     }
 
-    static inline float distance(const Vector3& _lhs, const Vector3& _rhs) {
-        return sqrt(((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x)) + ((_rhs.y - _lhs.y) * (_rhs.y - _lhs.y)) + ((_rhs.z - _lhs.z) * (_rhs.z - _lhs.z)));
+    static float distance(const Vector3& _lhs, const Vector3& _rhs) {
+        return std::sqrt((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x) + (_rhs.y - _lhs.y) * (_rhs.y - _lhs.y) + (_rhs.z - _lhs.z) * (_rhs.z - _lhs.z));
     }
 
-    static inline float dot(const Vector3& _lhs, const Vector3& _rhs) {
+    static float dot(const Vector3& _lhs, const Vector3& _rhs) {
         return _lhs.x * _rhs.x + _lhs.y * _rhs.y + _lhs.z * _rhs.z;
     }
 
-    static inline Vector3 cross(const Vector3& _lhs, const Vector3& _rhs) {
-        return Vector3(
+    static Vector3 cross(const Vector3& _lhs, const Vector3& _rhs) {
+        return {
             _lhs.y * _rhs.z - _lhs.z * _rhs.y,
             _lhs.z * _rhs.x - _lhs.x * _rhs.z,
             _lhs.x * _rhs.y - _lhs.y * _rhs.x
-        );
+        };
     }
 
-    static inline float angle(Vector3& _from, Vector3& _to) {
-        float d = dot(_from, _to);
-        return acos(d / (_from.magnitude() * _to.magnitude()));
+    static float angle(Vector3 const& _from, Vector3 const& _to) {
+        const float delta = dot(_from, _to);
+        return std::acos(delta / (_from.magnitude() * _to.magnitude()));
     }
 
-    inline std::string toString() {
-        return std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z);
+    [[nodiscard]] std::string toString() const {
+        return std::format("{}, {}, {}", x, y, z);
     }
 
-    inline Vector3& operator+=(const Vector3& _v) {
+    Vector3& operator+=(const Vector3& _v) {
         this->x += _v.x;
         this->y += _v.y;
         this->z += _v.z;
@@ -71,7 +82,7 @@ struct Vector3 {
         return _lhs;
     }
 
-    inline Vector3& operator-=(Vector3 _v) {
+    Vector3& operator-=(const Vector3& _v) {
         this->x -= _v.x;
         this->y -= _v.y;
         this->z -= _v.z;
@@ -81,38 +92,37 @@ struct Vector3 {
         _lhs -= _rhs;
         return _lhs;
     }
-    inline Vector3 operator-() {
-        this->x = -this->x;
-        this->y = -this->y;
-        this->z = -this->z;
-        return *this;
+    Vector3 operator-() const {
+        return -1 * *this;
     }
 
-    inline Vector3& operator*=(float _s) {
+    Vector3& operator*=(const float _s) {
         this->x *= _s;
         this->y *= _s;
         this->z *= _s;
         return *this;
     }
-    friend Vector3 operator*(Vector3 _v, float _s) {
+    friend Vector3 operator*(Vector3 _v, const float _s) {
         _v *= _s;
         return _v;
     }
-    friend Vector3 operator*(float _s, Vector3 _v) {
+    friend Vector3 operator*(const float _s, Vector3 _v) {
         _v *= _s;
         return _v;
     }
 
-    inline Vector3& operator/=(float _s) {
+    Vector3& operator/=(const float _s) {
         this->x /= _s;
         this->y /= _s;
         this->z /= _s;
         return *this;
     }
-    friend Vector3 operator/(Vector3 _v, float _s) {
+    friend Vector3 operator/(Vector3 _v, const float _s) {
         _v /= _s;
         return _v;
     }
+
+    Vector3& operator=(const Vector3& _v) = default;
 
     friend bool operator==(const Vector3& _lhs, const Vector3& _rhs) {
         return _lhs.x == _rhs.x && _lhs.y == _rhs.y && _lhs.z == _rhs.z;
@@ -121,13 +131,26 @@ struct Vector3 {
         return !(_lhs == _rhs);
     }
 
-    static inline Vector3 zero()    { return Vector3(0.0f, 0.0f, 0.0f); }
-    static inline Vector3 one()     { return Vector3(1.0f, 1.0f, 1.0f); }
-    static inline Vector3 right()   { return Vector3(1.0f, 0.0f, 0.0f); }
-    static inline Vector3 left()    { return Vector3(-1.0f, 0.0f, 0.0f); }
-    static inline Vector3 up()      { return Vector3(0.0f, 1.0f, 0.0f); }
-    static inline Vector3 down()    { return Vector3(0.0f, -1.0f, 0.0f); }
-    static inline Vector3 forward() { return Vector3(0.0f, 0.0f, 1.0f); }
-    static inline Vector3 back()    { return Vector3(0.0f, 0.0f, -1.0f); }
+    float operator[](const size_t _i) const {
+        switch(_i) {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            default:
+                throw std::out_of_range("Invalid index.");
+        }
+    }
+
+    static Vector3 zero()    { return { 0.0f,  0.0f,  0.0f  }; }
+    static Vector3 one()     { return { 1.0f,  1.0f,  1.0f  }; }
+    static Vector3 right()   { return { 1.0f,  0.0f,  0.0f  }; }
+    static Vector3 left()    { return { -1.0f, 0.0f,  0.0f  }; }
+    static Vector3 up()      { return { 0.0f,  1.0f,  0.0f  }; }
+    static Vector3 down()    { return { 0.0f,  -1.0f, 0.0f  }; }
+    static Vector3 forward() { return { 0.0f,  0.0f,  1.0f  }; }
+    static Vector3 back()    { return { 0.0f,  0.0f,  -1.0f }; }
 
 };

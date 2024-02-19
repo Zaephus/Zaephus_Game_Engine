@@ -24,32 +24,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f04b8d16-3256-4f26-a9b6-6e0fb8367364" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Zaephus_Engine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Zaephus_Engine.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Math/MathHelper.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix2x2.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix3x3.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix4x4.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Math/Quaternion.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/tasks.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Buffer.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Device.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Material.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Mesh.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/MeshRenderer.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/RenderDebug.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/RenderInstance.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Shader.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Window.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/main.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Build/glfw3.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Build/main.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShaderCompile.bat" beforeDir="false" afterPath="$PROJECT_DIR$/ShaderCompile.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SourceCompile.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SourceLink.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Zaephus_Engine.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Zaephus_Engine.vcxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Zaephus_Engine.vcxproj.filters" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Zaephus_Engine.vcxproj.user" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Shaders/shader_frag.spv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Shaders/shader_vert.spv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Buffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Buffer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Buffer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Graphics/Mesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Graphics/Mesh.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Graphics/Mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Graphics/Mesh.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Math/Math.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Math.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector2.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector2Int.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector2Int.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector3.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector4.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Structs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +58,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_HOME_DIR$/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -80,6 +79,9 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2ZxdKnyBU2TceHIG6U5xr8BPPZx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -95,28 +97,32 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "CLion__Test",
-    "last_opened_file_path": "A:/Projects/Zaephus_Game_Engine/Zaephus_Engine/ShaderCompile.bat",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/rozen/Documents/Project_Files/Zaephus_Game_Engine/Zaephus_Engine/cmake-build-debug",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C++",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rozen\Documents\Project_Files\Zaephus_Game_Engine\Zaephus_Engine\cmake-build-debug" />
+    </key>
+  </component>
   <component name="RunManager" selected="CMake Application.Zaephus_Engine">
     <configuration name="Zaephus_Engine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Zaephus_Engine" TARGET_NAME="Zaephus_Engine" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Zaephus_Engine" RUN_TARGET_NAME="Zaephus_Engine">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Shader Compile" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="glfw" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Zaephus_Engine" TARGET_NAME="glfw" CONFIG_NAME="Debug">
@@ -151,6 +157,20 @@
       <updated>1703367602355</updated>
       <workItem from="1703367604718" duration="1234000" />
       <workItem from="1703412950969" duration="5474000" />
+      <workItem from="1703521024660" duration="7722000" />
+      <workItem from="1703546676358" duration="1269000" />
+      <workItem from="1703600260924" duration="12670000" />
+      <workItem from="1703684180770" duration="6819000" />
+      <workItem from="1703771805626" duration="8167000" />
+      <workItem from="1703850289899" duration="6828000" />
+      <workItem from="1703943472076" duration="838000" />
+      <workItem from="1704228414946" duration="2277000" />
+      <workItem from="1707949759353" duration="635000" />
+      <workItem from="1707950539659" duration="277000" />
+      <workItem from="1707950853517" duration="390000" />
+      <workItem from="1708017817050" duration="4660000" />
+      <workItem from="1708121230776" duration="2778000" />
+      <workItem from="1708297247244" duration="4646000" />
     </task>
     <servers />
   </component>

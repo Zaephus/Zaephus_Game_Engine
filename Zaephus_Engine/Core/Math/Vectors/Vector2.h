@@ -2,6 +2,7 @@
 #pragma once
 
 #include <cmath>
+#include <format>
 #include <string>
 
 struct Vector2 {
@@ -9,52 +10,61 @@ struct Vector2 {
     float x;
     float y;
 
-    Vector2(float _x) : Vector2(_x, _x) {}
-    Vector2(float _x, float _y) {
+    Vector2() {
+        *this = zero();
+    }
+
+    explicit Vector2(const float _x) : Vector2(_x, _x) {}
+    Vector2(const float _x, const float _y) {
         x = _x;
         y = _y;
     }
 
-    inline float magnitude() {
-        return sqrt(x*x + y*y);
+    Vector2(const Vector2& _v) {
+        x = _v.x;
+        y = _v.y;
     }
 
-    inline float squaredMagnitude() {
+    [[nodiscard]] float magnitude() const {
+        return std::sqrt(x*x + y*y);
+    }
+
+    [[nodiscard]] float squaredMagnitude() const {
         return x*x + y*y;
     }
 
-    inline Vector2 normalized() {
+    [[nodiscard]] Vector2 normalized() const {
         Vector2 norm = Vector2(x, y);
         norm.normalize();
         return norm;
     }
 
-    inline void normalize() {
+    void normalize() {
         *this /= magnitude();
     }
 
-    static inline float distance(const Vector2& _lhs, const Vector2& _rhs) {
-        return sqrt(((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x)) + ((_rhs.y - _lhs.y) * (_rhs.y - _lhs.y)));
+    static float distance(const Vector2& _lhs, const Vector2& _rhs) {
+        return std::sqrt((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x) + (_rhs.y - _lhs.y) * (_rhs.y - _lhs.y));
     }
 
-    static inline float dot(const Vector2& _lhs, const Vector2& _rhs) {
+    static float dot(const Vector2& _lhs, const Vector2& _rhs) {
         return _lhs.x * _rhs.x + _lhs.y * _rhs.y;
     }
 
-    static inline float cross(const Vector2& _lhs, const Vector2& _rhs) {
+    static float cross(const Vector2& _lhs, const Vector2& _rhs) {
         return _lhs.y * _rhs.x - _lhs.x * _rhs.y;
     }
 
-    static inline float angle(Vector2& _from, Vector2& _to) {
-        float d = dot(_from, _to);
-        return acos(d / (_from.magnitude() * _to.magnitude()));
+    static float angle(const Vector2& _from, const Vector2& _to) {
+        const float delta = dot(_from, _to);
+        return std::acos(delta / (_from.magnitude() * _to.magnitude()));
     }
 
-    inline std::string toString() {
-        return std::to_string(x) + ", " + std::to_string(y);
+    [[nodiscard]] std::string toString() const {
+        return std::format("{}, {}", x, y);
     }
 
-    inline Vector2& operator+=(const Vector2& _v) {
+    Vector2& operator+=(const Vector2& _v) {
         this->x += _v.x;
         this->y += _v.y;
         return *this;
@@ -64,7 +74,7 @@ struct Vector2 {
         return _lhs;
     }
 
-    inline Vector2& operator-=(Vector2 _v) {
+    Vector2& operator-=(const Vector2& _v) {
         this->x -= _v.x;
         this->y -= _v.y;
         return *this;
@@ -73,35 +83,37 @@ struct Vector2 {
         _lhs -= _rhs;
         return _lhs;
     }
-    inline Vector2 operator-() {
+    Vector2 operator-() {
         this->x = -this->x;
         this->y = -this->y;
         return *this;
     }
 
-    inline Vector2& operator*=(float _s) {
+    Vector2& operator*=(const float _s) {
         this->x *= _s;
         this->y *= _s;
         return *this;
     }
-    friend Vector2 operator*(Vector2 _v, float _s) {
+    friend Vector2 operator*(Vector2 _v, const float _s) {
         _v *= _s;
         return _v;
     }
-    friend Vector2 operator*(float _s, Vector2 _v) {
+    friend Vector2 operator*(const float _s, Vector2 _v) {
         _v *= _s;
         return _v;
     }
 
-    inline Vector2& operator/=(float _s) {
+    Vector2& operator/=(const float _s) {
         this->x /= _s;
         this->y /= _s;
         return *this;
     }
-    friend Vector2 operator/(Vector2 _v, float _s) {
+    friend Vector2 operator/(Vector2 _v, const float _s) {
         _v /= _s;
         return _v;
     }
+
+    Vector2& operator=(const Vector2& _v) = default;
 
     friend bool operator==(const Vector2& _lhs, const Vector2& _rhs) {
         return _lhs.x == _rhs.x && _lhs.y == _rhs.y;
@@ -110,11 +122,22 @@ struct Vector2 {
         return !(_lhs == _rhs);
     }
 
-    static inline Vector2 zero()    { return Vector2(0.0f, 0.0f); }
-    static inline Vector2 one()     { return Vector2(1.0f, 1.0f); }
-    static inline Vector2 right()   { return Vector2(1.0f, 0.0f); }
-    static inline Vector2 left()    { return Vector2(-1.0f, 0.0f); }
-    static inline Vector2 up()      { return Vector2(0.0f, 1.0f); }
-    static inline Vector2 down()    { return Vector2(0.0f, -1.0f); }
+    float operator[](const size_t _i) const {
+        switch(_i) {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            default:
+                throw std::out_of_range("Invalid index.");
+        }
+    }
+
+    static Vector2 zero()    { return { 0.0f,  0.0f }; }
+    static Vector2 one()     { return { 1.0f,  1.0f }; }
+    static Vector2 right()   { return { 1.0f,  0.0f }; }
+    static Vector2 left()    { return { -1.0f, 0.0f }; }
+    static Vector2 up()      { return { 0.0f,  1.0f }; }
+    static Vector2 down()    { return { 0.0f, -1.0f }; }
 
 };

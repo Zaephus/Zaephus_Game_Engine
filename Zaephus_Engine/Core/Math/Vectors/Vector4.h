@@ -2,7 +2,9 @@
 #pragma once
 
 #include <cmath>
+#include <format>
 #include <string>
+#include <stdexcept>
 
 struct Vector4 {
 
@@ -11,50 +13,61 @@ struct Vector4 {
     float z;
     float w;
 
-    Vector4(float _x) : Vector4(_x, _x, _x, _x) {}
-    Vector4(float _x, float _y, float _z, float _w) {
+    Vector4() {
+        *this = zero();
+    }
+
+    explicit Vector4(const float _x) : Vector4(_x, _x, _x, _x) {}
+    Vector4(const float _x, const float _y, const float _z, const float _w) {
         x = _x;
         y = _y;
         z = _z;
         w = _w;
     }
 
-    inline float magnitude() {
-        return sqrt(x*x + y*y + z*z + w*w);
+    Vector4(const Vector4& _v) {
+        x = _v.x;
+        y = _v.y;
+        z = _v.z;
+        w = _v.w;
     }
 
-    inline float squaredMagnitude() {
+    [[nodiscard]] float magnitude() const {
+        return std::sqrt(x*x + y*y + z*z + w*w);
+    }
+
+    [[nodiscard]] float squaredMagnitude() const {
         return x*x + y*y + z*z + w*w;
     }
 
-    inline Vector4 normalized() {
+    [[nodiscard]] Vector4 normalized() const {
         Vector4 norm = Vector4(x, y, z, w);
         norm.normalize();
         return norm;
     }
 
-    inline void normalize() {
+    void normalize() {
         *this /= magnitude();
     }
 
-    static inline float distance(const Vector4& _lhs, const Vector4& _rhs) {
-        return sqrt(((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x)) + ((_rhs.y - _lhs.y) * (_rhs.y - _lhs.y)) + ((_rhs.z - _lhs.z) * (_rhs.z - _lhs.z)) + ((_rhs.w - _lhs.w) * (_rhs.w - _lhs.w)));
+    static float distance(const Vector4& _lhs, const Vector4& _rhs) {
+        return std::sqrt((_rhs.x - _lhs.x) * (_rhs.x - _lhs.x) + (_rhs.y - _lhs.y) * (_rhs.y - _lhs.y) + (_rhs.z - _lhs.z) * (_rhs.z - _lhs.z) + (_rhs.w - _lhs.w) * (_rhs.w - _lhs.w));
     }
 
-    static inline float dot(const Vector4& _lhs, const Vector4& _rhs) {
+    static float dot(const Vector4& _lhs, const Vector4& _rhs) {
         return _lhs.x * _rhs.x + _lhs.y * _rhs.y + _lhs.z * _rhs.z + _lhs.w * _rhs.w;
     }
 
-    static inline float angle(Vector4& _from, Vector4& _to) {
-        float d = dot(_from, _to);
-        return acos(d / (_from.magnitude() * _to.magnitude()));
+    static float angle(const Vector4& _from, const Vector4& _to) {
+        const float delta = dot(_from, _to);
+        return std::acos(delta / (_from.magnitude() * _to.magnitude()));
     }
 
-    inline std::string toString() {
-        return std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ", " + std::to_string(w);
+    [[nodiscard]] std::string toString() const {
+        return std::format("{}, {}, {}, {}", x, y, z, w);
     }
 
-    inline Vector4& operator+=(const Vector4& _v) {
+    Vector4& operator+=(const Vector4& _v) {
         this->x += _v.x;
         this->y += _v.y;
         this->z += _v.z;
@@ -66,7 +79,7 @@ struct Vector4 {
         return _lhs;
     }
 
-    inline Vector4& operator-=(Vector4 _v) {
+    Vector4& operator-=(const Vector4& _v) {
         this->x -= _v.x;
         this->y -= _v.y;
         this->z -= _v.z;
@@ -77,41 +90,39 @@ struct Vector4 {
         _lhs -= _rhs;
         return _lhs;
     }
-    inline Vector4 operator-() {
-        this->x = -this->x;
-        this->y = -this->y;
-        this->z = -this->z;
-        this->w = -this->w;
-        return *this;
+    Vector4 operator-() const {
+        return -1 * *this;
     }
 
-    inline Vector4& operator*=(float _s) {
+    Vector4& operator*=(const float _s) {
         this->x *= _s;
         this->y *= _s;
         this->z *= _s;
         this->w *= _s;
         return *this;
     }
-    friend Vector4 operator*(Vector4 _v, float _s) {
+    friend Vector4 operator*(Vector4 _v, const float _s) {
         _v *= _s;
         return _v;
     }
-    friend Vector4 operator*(float _s, Vector4 _v) {
+    friend Vector4 operator*(const float _s, Vector4 _v) {
         _v *= _s;
         return _v;
     }
 
-    inline Vector4& operator/=(float _s) {
+    Vector4& operator/=(const float _s) {
         this->x /= _s;
         this->y /= _s;
         this->z /= _s;
-        this->w *= _s;
+        this->w /= _s;
         return *this;
     }
-    friend Vector4 operator/(Vector4 _v, float _s) {
+    friend Vector4 operator/(Vector4 _v, const float _s) {
         _v /= _s;
         return _v;
     }
+
+    Vector4& operator=(const Vector4& _v) = default;
 
     friend bool operator==(const Vector4& _lhs, const Vector4& _rhs) {
         return _lhs.x == _rhs.x && _lhs.y == _rhs.y && _lhs.z == _rhs.z && _lhs.w == _rhs.w;
@@ -120,7 +131,22 @@ struct Vector4 {
         return !(_lhs == _rhs);
     }
 
-    static inline Vector4 zero()    { return Vector4(0.0f, 0.0f, 0.0f, 0.0f); }
-    static inline Vector4 one()     { return Vector4(1.0f, 1.0f, 1.0f, 1.0f); }
+    float operator[](const size_t _i) const {
+        switch(_i) {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            case 3:
+                return w;
+            default:
+                throw std::out_of_range("Invalid index.");
+        }
+    }
+
+    static Vector4 zero()    { return { 0.0f, 0.0f, 0.0f, 0.0f }; }
+    static Vector4 one()     { return { 1.0f, 1.0f, 1.0f, 1.0f }; }
 
 };

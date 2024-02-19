@@ -1,9 +1,7 @@
 
 #pragma once
 
-#define GLFW_INCLUDE_VULKAN
-
-#include <GLFW/glfw3.h>
+#include <vulkan/vulkan.h>
 
 #include "Device.h"
 
@@ -19,9 +17,9 @@ class Buffer {
         void create(VkBufferUsageFlags _usage, VkMemoryPropertyFlags _properties, VkDeviceSize _offset);
         void destroy();
 
-        void bindData(void* _data);
+        void bindData(void*& _data);
         void copyData(const void* _data);
-        void copyFrom(Buffer& _sourceBuffer);
+        void copyFromBuffer(Buffer& _sourceBuffer);
 
     private:
 

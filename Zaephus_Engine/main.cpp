@@ -8,8 +8,9 @@
 
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+// #include <glm/glm.hpp>
+// #include <glm/gtc/matrix_transform.hpp>
+// #include <glm/gtx/string_cast.hpp>
 
 #include <stb_image.h>
 
@@ -18,7 +19,6 @@
 #include <cstdlib>
 #include <vector>
 #include <limits>
-#include <algorithm>
 #include <fstream>
 #include <chrono>
 
@@ -30,15 +30,15 @@
 #include "Core/Graphics/Vertex.h"
 #include "Core/Buffer.h"
 
-const uint32_t WIDTH = 800;
-const uint32_t HEIGHT = 600;
+constexpr uint32_t WIDTH = 800;
+constexpr uint32_t HEIGHT = 600;
 
-const int MAX_FRAMES_IN_FLIGHT = 2;
+constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
 #ifdef NDEBUG
-	const bool enableValidationLayers = false;
+	constexpr bool enableValidationLayers = false;
 #else
-	const bool enableValidationLayers = true;
+	constexpr bool enableValidationLayers = true;
 #endif
 
 const std::vector<Vertex> vertices = {
@@ -114,25 +114,13 @@ private:
 
 	uint32_t currentFrame = 0;
 
-	// VkBuffer vertexBuffer;
-	// VkDeviceMemory vertexBufferMemory;
-	// VkBuffer indexBuffer;
-	// VkDeviceMemory indexBufferMemory;
-
-	// VkBuffer vertexBufferTwo;
-	// VkDeviceMemory vertexBufferMemoryTwo;
-	// VkBuffer indexBufferTwo;
-	// VkDeviceMemory indexBufferMemoryTwo;
-
 	Buffer vertexBuffer;
 	Buffer vertexBufferTwo;
 
 	Buffer indexBuffer;
 	Buffer indexBufferTwo;
 
-	std::vector<VkBuffer> uniformBuffers;
-	// std::vector<Buffer> uniformBuffers;
-	std::vector<VkDeviceMemory> uniformBuffersMemory;
+	std::vector<Buffer> uniformBuffers;
 	std::vector<void*> uniformBuffersMapped;
 
 	VkDescriptorPool descriptorPool;
@@ -196,6 +184,10 @@ private:
 		createDescriptorPool();
 		createDescriptorSets();
 		createCommandBuffers(MAX_FRAMES_IN_FLIGHT);		// Rendering
+
+		Vector3 test;
+		std::cout << test.toString() << std::endl;
+
 	}
 
 	void mainLoop() {
@@ -218,29 +210,17 @@ private:
 		vkFreeMemory(device.logicalDevice, textureImageMemory, nullptr);
 
 		for(size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-			vkDestroyBuffer(device.logicalDevice, uniformBuffers[i], nullptr);
-			vkFreeMemory(device.logicalDevice, uniformBuffersMemory[i], nullptr);
-			// uniformBuffers[i].destroy();
+			uniformBuffers[i].destroy();
 		}
 
 		vkDestroyDescriptorPool(device.logicalDevice, descriptorPool, nullptr);
 
 		vkDestroyDescriptorSetLayout(device.logicalDevice, descriptorSetLayout, nullptr);
 
-		// vkDestroyBuffer(device.logicalDevice, indexBuffer, nullptr);
-		// vkFreeMemory(device.logicalDevice, indexBufferMemory, nullptr);
 		indexBuffer.destroy();
-
-		// vkDestroyBuffer(device.logicalDevice, vertexBuffer, nullptr);
-		// vkFreeMemory(device.logicalDevice, vertexBufferMemory, nullptr);
-		vertexBuffer.destroy();
-
-		// vkDestroyBuffer(device.logicalDevice, indexBufferTwo, nullptr);
-		// vkFreeMemory(device.logicalDevice, indexBufferMemoryTwo, nullptr);
 		indexBufferTwo.destroy();
 
-		// vkDestroyBuffer(device.logicalDevice, vertexBufferTwo, nullptr);
-		// vkFreeMemory(device.logicalDevice, vertexBufferMemoryTwo, nullptr);
+		vertexBuffer.destroy();
 		vertexBufferTwo.destroy();
 
 		vkDestroyPipeline(device.logicalDevice, graphicsPipeline, nullptr);
@@ -969,7 +949,7 @@ private:
 
 		vertexBuffer = Buffer(&device, &commandPool, bufferSize);
 		vertexBuffer.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-		vertexBuffer.copyFrom(stagingBuffer);
+		vertexBuffer.copyFromBuffer(stagingBuffer);
 
 		stagingBuffer.destroy();
 
@@ -982,9 +962,9 @@ private:
 		stagingBufferTwo.copyData(verticesTwo.data());
 
 		vertexBufferTwo = Buffer(&device, &commandPool, bufferSizeTwo);
-		vertexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, bufferSize);
+		vertexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
 
-		vertexBufferTwo.copyFrom(stagingBufferTwo);
+		vertexBufferTwo.copyFromBuffer(stagingBufferTwo);
 
 		stagingBufferTwo.destroy();
 
@@ -1000,7 +980,7 @@ private:
 
 		indexBuffer = Buffer(&device, &commandPool, bufferSize);
 		indexBuffer.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-		indexBuffer.copyFrom(stagingBuffer);
+		indexBuffer.copyFromBuffer(stagingBuffer);
 
 		stagingBuffer.destroy();
 
@@ -1013,8 +993,8 @@ private:
 		stagingBufferTwo.copyData(indicesTwo.data());
 
 		indexBufferTwo = Buffer(&device, &commandPool, bufferSizeTwo);
-		indexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, bufferSize);
-		indexBufferTwo.copyFrom(stagingBufferTwo);
+		indexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
+		indexBufferTwo.copyFromBuffer(stagingBufferTwo);
 
 		stagingBufferTwo.destroy();
 
@@ -1025,15 +1005,12 @@ private:
 		VkDeviceSize bufferSize = sizeof(UniformBufferObject);
 
 		uniformBuffers.resize(MAX_FRAMES_IN_FLIGHT);
-		uniformBuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
 		uniformBuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
 
 		for(size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-			// uniformBuffers[i] = Buffer(&device, &commandPool, bufferSize);
-			// uniformBuffers[i].create(VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
-			// uniformBuffers[i].bindData(&uniformBuffersMapped[i]);
-			createBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, uniformBuffers[i], uniformBuffersMemory[i], 0);
-			vkMapMemory(device.logicalDevice, uniformBuffersMemory[i], 0, bufferSize, 0, &uniformBuffersMapped[i]);
+			uniformBuffers[i] = Buffer(&device, &commandPool, bufferSize);
+			uniformBuffers[i].create(VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
+			uniformBuffers[i].bindData(uniformBuffersMapped[i]);
 		}
 
 	}
@@ -1075,7 +1052,7 @@ private:
 
 		for(size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 			VkDescriptorBufferInfo bufferInfo{};
-			bufferInfo.buffer = uniformBuffers[i];
+			bufferInfo.buffer = uniformBuffers[i].buffer;
 			bufferInfo.offset = 0;
 			bufferInfo.range = sizeof(UniformBufferObject);
 
@@ -1107,20 +1084,6 @@ private:
 		}
 
 	}
-
-	// void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
-
-	// 	VkCommandBuffer commandBuffer = beginSingleTimeCommands();
-
-	// 	VkBufferCopy copyRegion{};
-	// 	copyRegion.srcOffset = 0;
-	// 	copyRegion.dstOffset = 0;
-	// 	copyRegion.size = size;
-	// 	vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
-
-	// 	endSingleTimeCommands(commandBuffer);
-
-	// }
 
 	VkCommandBuffer beginSingleTimeCommands() {
 
@@ -1156,34 +1119,6 @@ private:
 		vkQueueWaitIdle(device.graphicsQueue);
 
 		vkFreeCommandBuffers(device.logicalDevice, commandPool, 1, &commandBuffer);
-
-	}
-
-	void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory, VkDeviceSize offset) {
-
-		VkBufferCreateInfo bufferInfo{};
-		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferInfo.size = size;
-		bufferInfo.usage = usage;
-		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-
-		if(vkCreateBuffer(device.logicalDevice, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-			throw std::runtime_error("Failed to create buffer!");
-		}
-
-		VkMemoryRequirements memRequirements;
-		vkGetBufferMemoryRequirements(device.logicalDevice, buffer, &memRequirements);
-
-		VkMemoryAllocateInfo allocInfo{};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size * 2; // TODO: Remove temporary times 2.
-		allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
-
-		if(vkAllocateMemory(device.logicalDevice, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-			throw std::runtime_error("Failed to allocate buffer memory!");
-		}
-
-		vkBindBufferMemory(device.logicalDevice, buffer, bufferMemory, offset);
 
 	}
 
@@ -1318,13 +1253,9 @@ private:
 		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 
 		UniformBufferObject ubo{};
-		ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		ubo.proj = glm::perspective(glm::radians(45.0f), swapchainExtent.width / (float)swapchainExtent.height, 0.1f, 10.0f);
-		ubo.proj[1][1] *= -1;
-		
-    	std::cout << sizeof(uniformBuffersMapped[0]) << std::endl;
-    	std::cout << sizeof(&ubo) << std::endl;
+		ubo.model = Matrix4x4::rotateMatrix(Quaternion::fromEuler(0.0f, 0.0f, time * 90.0f));
+		ubo.view = Matrix4x4::lookAt(Vector3(2.0f, 2.0f, 2.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f));
+		ubo.proj = Matrix4x4::perspective(Math::deg2rad * 45.0f, static_cast<float>(swapchainExtent.height) / static_cast<float>(swapchainExtent.width), 0.1f, 10.0f);
 
 		memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
@@ -1377,6 +1308,8 @@ private:
 
 		// Bind Material Pipeline
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+		// Bind Descriptor Sets
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
 
 		// Bind Buffers of First Object
 		VkBuffer vertexBuffers[] = { vertexBuffer.buffer };
@@ -1385,8 +1318,6 @@ private:
 
 		vkCmdBindIndexBuffer(commandBuffer, indexBuffer.buffer, 0, VK_INDEX_TYPE_UINT16);
 
-		// Bind Descriptor Sets of First Object
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
 		// Draw First Object
 		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
@@ -1397,8 +1328,6 @@ private:
 
 		vkCmdBindIndexBuffer(commandBuffer, indexBufferTwo.buffer, 0, VK_INDEX_TYPE_UINT16);
 
-		// Bind Descriptor Sets of Second Object
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
 		// Draw Second Object
 		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indicesTwo.size()), 1, 0, 0, 0);
 		

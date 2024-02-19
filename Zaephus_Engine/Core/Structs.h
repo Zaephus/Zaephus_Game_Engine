@@ -4,8 +4,6 @@
 #define GLFW_INCLUDE_VULKAN
 
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <optional>
 #include <vector>
@@ -16,7 +14,7 @@ struct QueueFamilyIndices {
 	std::optional<uint32_t> graphicsFamily;
 	std::optional<uint32_t> presentFamily;
 
-	bool isComplete() {
+	[[nodiscard]] bool isComplete() const {
 		return graphicsFamily.has_value() && presentFamily.has_value();
 	}
 };
@@ -28,7 +26,7 @@ struct SwapchainSupportDetails {
 };
 
 struct UniformBufferObject {
-	glm::mat4 model;
-	glm::mat4 view;
-	glm::mat4 proj;
+	Matrix4x4 model;
+	Matrix4x4 view;
+	Matrix4x4 proj;
 };

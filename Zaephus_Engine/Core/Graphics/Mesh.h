@@ -8,6 +8,8 @@
 #include <vector>
 
 #include "Core/Structs.h"
+#include "Core/Device.h"
+#include "Core/Buffer.h"
 #include "Core/Math/Math.h"
 #include "Core/Graphics/Vertex.h"
 
@@ -16,22 +18,30 @@ class Mesh {
     public:
 
         const std::vector<Vector3> vertices;
-        const std::vector<Vector4> vertexColours;
+        const std::vector<Vector3> vertexColors;
         const std::vector<Vector2> uvs;
 
         const std::vector<uint16_t> indices;
 
-        UniformBufferObject ubo;
+        Mesh(Device* _device, VkCommandPool* _commandPool);
 
         void initialize();
-        void render();
+        void render(const VkCommandBuffer *_commandBuffer) const;
 
     private:
+
+        Device* device;
+        VkCommandPool* commandPool;
+
+        Buffer vertexBuffer;
+        Buffer indexBuffer;
+
+        UniformBufferObject ubo;
 
         void createVertexBuffer();
         void createIndexBuffer();
         void updateUniformBuffer();
 
-        const std::vector<Vertex> getVertexList();
+        [[nodiscard]] std::vector<Vertex> getVertexList() const;
 
 };

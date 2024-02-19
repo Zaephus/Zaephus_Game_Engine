@@ -30,10 +30,9 @@ void Buffer::create(VkBufferUsageFlags _usage, VkMemoryPropertyFlags _properties
     VkMemoryRequirements memRequirements;
     vkGetBufferMemoryRequirements(device->logicalDevice, buffer, &memRequirements);
 
-    // TODO: Remove temporary times 2 in allocationSize.
-    VkMemoryAllocateInfo allocInfo{
+    VkMemoryAllocateInfo allocInfo {
         .sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-        .allocationSize = memRequirements.size * 2,
+        .allocationSize = memRequirements.size,
         .memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, _properties)
     };
 
@@ -50,7 +49,7 @@ void Buffer::destroy() {
     vkFreeMemory(device->logicalDevice, bufferMemory, nullptr);
 }
 
-void Buffer::bindData(void* _data) {
+void Buffer::bindData(void*& _data) {
     vkMapMemory(device->logicalDevice, bufferMemory, 0, bufferSize, 0, &_data);
 }
 
@@ -61,11 +60,11 @@ void Buffer::copyData(const void* _data) {
     vkUnmapMemory(device->logicalDevice, bufferMemory);
 }
 
-void Buffer::copyFrom(Buffer &_sourceBuffer) {
+void Buffer::copyFromBuffer(Buffer &_sourceBuffer) {
 
     VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
-    VkBufferCopy copyRegion{
+    VkBufferCopy copyRegion {
         .srcOffset = 0,
         .dstOffset = 0,
         .size = bufferSize
