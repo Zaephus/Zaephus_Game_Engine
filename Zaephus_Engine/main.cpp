@@ -8,10 +8,6 @@
 
 #include <GLFW/glfw3.h>
 
-// #include <glm/glm.hpp>
-// #include <glm/gtc/matrix_transform.hpp>
-// #include <glm/gtx/string_cast.hpp>
-
 #include <stb_image.h>
 
 #include <iostream>
@@ -28,6 +24,7 @@
 #include "Core/Structs.h"
 #include "Core/Math/Math.h"
 #include "Core/Graphics/Vertex.h"
+#include "Core/Graphics/Mesh.h"
 #include "Core/Buffer.h"
 
 constexpr uint32_t WIDTH = 800;
@@ -41,17 +38,39 @@ constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 	constexpr bool enableValidationLayers = true;
 #endif
 
-const std::vector<Vertex> vertices = {
-	{ { -0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { 0.5f,  -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { 0.5f,  0.5f,  0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { -0.5f, 0.5f,  0.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
+const std::vector<Vector3> verticesOne = {
+	{ -0.5f, -0.5f, 0.0f },
+	{ 0.5f,  -0.5f, 0.0f },
+	{ 0.5f,  0.5f,  0.0f },
+	{ -0.5f, 0.5f,  0.0f }
 };
-const std::vector<Vertex> verticesTwo = {
-	{ { -0.5f, -0.5f, -0.5f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { 0.5f,  -0.5f, -0.5f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { 0.5f,  0.5f,  -0.5f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} },
-	{ { -0.5f, 0.5f,  -0.5f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f} }
+
+const std::vector<Vector3> verticesTwo = {
+	{ -0.5f, -0.5f, -0.5f },
+	{ 0.5f,  -0.5f, -0.5f },
+	{ 0.5f,  0.5f,  -0.5f },
+	{ -0.5f, 0.5f,  -0.5f }
+};
+
+const std::vector<Vector3> vertexColors = {
+	{ 1.0f, 0.0f, 0.0f },
+	{ 0.0f, 1.0f, 0.0f },
+	{ 0.0f, 0.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f }
+};
+
+const std::vector<Vector2> uvs = {
+	{ 1.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 1.0f },
+	{ 1.0f, 1.0f }
+};
+
+const std::vector vec3Zero = {
+	Vector3::zero(),
+	Vector3::zero(),
+	Vector3::zero(),
+	Vector3::zero()
 };
 
 const std::vector<uint16_t> indices = {
@@ -114,12 +133,6 @@ private:
 
 	uint32_t currentFrame = 0;
 
-	Buffer vertexBuffer;
-	Buffer vertexBufferTwo;
-
-	Buffer indexBuffer;
-	Buffer indexBufferTwo;
-
 	std::vector<Buffer> uniformBuffers;
 	std::vector<void*> uniformBuffersMapped;
 
@@ -135,6 +148,9 @@ private:
 	VkImage depthImage;
 	VkDeviceMemory depthImageMemory;
 	VkImageView depthImageView;
+
+	Mesh meshOne = Mesh(&device, &commandPool);
+	Mesh meshTwo = Mesh(&device, &commandPool);
 
 	void initWindow() {
 		glfwInit();
@@ -172,21 +188,31 @@ private:
 		createRenderPass();			// Rendering
 		createDescriptorSetLayout();
 		createGraphicsPipeline();	// Material
+
 		createCommandPool();		// Rendering
 		createDepthResources();
 		createFrameBuffers();		// Rendering
+
 		createTextureImage();
 		createTextureImageView();
 		createTextureSampler();
-		createVertexBuffer();
-		createIndexBuffer();
+
+		meshOne.vertexPositions = verticesOne;
+		meshOne.vertexColors = vertexColors;
+		meshOne.uvs = uvs;
+		meshOne.indices = indices;
+		meshOne.initialize();
+
+		meshTwo.vertexPositions = verticesTwo;
+		meshTwo.vertexColors = vertexColors;
+		meshTwo.uvs = uvs;
+		meshTwo.indices = indices;
+		meshTwo.initialize();
+
 		createUniformBuffers();
 		createDescriptorPool();
 		createDescriptorSets();
 		createCommandBuffers(MAX_FRAMES_IN_FLIGHT);		// Rendering
-
-		Vector3 test;
-		std::cout << test.toString() << std::endl;
 
 	}
 
@@ -217,11 +243,8 @@ private:
 
 		vkDestroyDescriptorSetLayout(device.logicalDevice, descriptorSetLayout, nullptr);
 
-		indexBuffer.destroy();
-		indexBufferTwo.destroy();
-
-		vertexBuffer.destroy();
-		vertexBufferTwo.destroy();
+		meshOne.cleanup();
+		meshTwo.cleanup();
 
 		vkDestroyPipeline(device.logicalDevice, graphicsPipeline, nullptr);
 		vkDestroyPipelineLayout(device.logicalDevice, pipelineLayout, nullptr);
@@ -939,67 +962,6 @@ private:
 
 	}
 
-	void createVertexBuffer() {
-
-		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
-
-		Buffer stagingBuffer = Buffer(&device, &commandPool, bufferSize);
-		stagingBuffer.create(VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
-		stagingBuffer.copyData(vertices.data());
-
-		vertexBuffer = Buffer(&device, &commandPool, bufferSize);
-		vertexBuffer.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-		vertexBuffer.copyFromBuffer(stagingBuffer);
-
-		stagingBuffer.destroy();
-
-		// Second set:
-
-		VkDeviceSize bufferSizeTwo = sizeof(verticesTwo[0]) * verticesTwo.size();
-
-		Buffer stagingBufferTwo = Buffer(&device, &commandPool, bufferSizeTwo);
-		stagingBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
-		stagingBufferTwo.copyData(verticesTwo.data());
-
-		vertexBufferTwo = Buffer(&device, &commandPool, bufferSizeTwo);
-		vertexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-
-		vertexBufferTwo.copyFromBuffer(stagingBufferTwo);
-
-		stagingBufferTwo.destroy();
-
-	}
-
-	void createIndexBuffer() {
-		
-		VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
-
-		Buffer stagingBuffer = Buffer(&device, &commandPool, bufferSize);
-		stagingBuffer.create(VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
-		stagingBuffer.copyData(indices.data());
-
-		indexBuffer = Buffer(&device, &commandPool, bufferSize);
-		indexBuffer.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-		indexBuffer.copyFromBuffer(stagingBuffer);
-
-		stagingBuffer.destroy();
-
-		// Second set:
-
-		VkDeviceSize bufferSizeTwo = sizeof(indicesTwo[0]) * indicesTwo.size();
-
-		Buffer stagingBufferTwo  = Buffer(&device, &commandPool, bufferSizeTwo);
-		stagingBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 0);
-		stagingBufferTwo.copyData(indicesTwo.data());
-
-		indexBufferTwo = Buffer(&device, &commandPool, bufferSizeTwo);
-		indexBufferTwo.create(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
-		indexBufferTwo.copyFromBuffer(stagingBufferTwo);
-
-		stagingBufferTwo.destroy();
-
-	}
-
 	void createUniformBuffers() {
 
 		VkDeviceSize bufferSize = sizeof(UniformBufferObject);
@@ -1311,26 +1273,8 @@ private:
 		// Bind Descriptor Sets
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
 
-		// Bind Buffers of First Object
-		VkBuffer vertexBuffers[] = { vertexBuffer.buffer };
-		VkDeviceSize offsets[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-
-		vkCmdBindIndexBuffer(commandBuffer, indexBuffer.buffer, 0, VK_INDEX_TYPE_UINT16);
-
-		// Draw First Object
-		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
-
-		// Bind Buffers of Second Object
-		VkBuffer vertexBuffersTwo[] = { vertexBufferTwo.buffer };
-		VkDeviceSize offsetsTwo[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffersTwo, offsetsTwo);
-
-		vkCmdBindIndexBuffer(commandBuffer, indexBufferTwo.buffer, 0, VK_INDEX_TYPE_UINT16);
-
-		// Draw Second Object
-		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indicesTwo.size()), 1, 0, 0, 0);
-		
+		meshOne.render(&commandBuffer);
+		meshTwo.render(&commandBuffer);
 		// End Render Pass
 		vkCmdEndRenderPass(commandBuffer);
 

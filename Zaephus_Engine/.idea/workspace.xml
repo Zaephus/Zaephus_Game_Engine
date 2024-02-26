@@ -24,27 +24,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f04b8d16-3256-4f26-a9b6-6e0fb8367364" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Math/MathHelper.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix2x2.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix3x3.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Math/Matrices/Matrix4x4.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Math/Quaternion.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Shaders/shader_frag.spv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bin/Shaders/shader_vert.spv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Buffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Buffer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Buffer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Device.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Device.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Graphics/Mesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Graphics/Mesh.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Graphics/Mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Graphics/Mesh.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Math/Math.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Math.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector2.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector2.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector2Int.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector2Int.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector3.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Math/Vectors/Vector4.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Math/Vectors/Vector4.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Structs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +45,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_HOME_DIR$/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/main.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -87,32 +72,32 @@
     <option name="showLibraryContents" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "CMake Application.Zaephus_Engine.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/rozen/Documents/Project_Files/Zaephus_Game_Engine/Zaephus_Engine/cmake-build-debug",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C++",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;CMake Application.Zaephus_Engine.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rozen/Documents/Project_Files/Zaephus_Game_Engine/Zaephus_Engine/cmake-build-debug&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C++&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rozen\Documents\Project_Files\Zaephus_Game_Engine\Zaephus_Engine\cmake-build-debug" />
@@ -171,6 +156,8 @@
       <workItem from="1708017817050" duration="4660000" />
       <workItem from="1708121230776" duration="2778000" />
       <workItem from="1708297247244" duration="4646000" />
+      <workItem from="1708378004095" duration="3996000" />
+      <workItem from="1708900406572" duration="6108000" />
     </task>
     <servers />
   </component>

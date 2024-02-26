@@ -17,31 +17,29 @@ class Mesh {
 
     public:
 
-        const std::vector<Vector3> vertices;
-        const std::vector<Vector3> vertexColors;
-        const std::vector<Vector2> uvs;
+        std::vector<Vector3> vertexPositions;
+        std::vector<Vector3> vertexColors;
+        std::vector<Vector2> uvs;
 
-        const std::vector<uint16_t> indices;
+        Buffer vertexBuffer;
+        Buffer indexBuffer;
+
+        std::vector<uint16_t> indices;
 
         Mesh(Device* _device, VkCommandPool* _commandPool);
 
         void initialize();
         void render(const VkCommandBuffer *_commandBuffer) const;
+        void cleanup();
 
     private:
 
         Device* device;
         VkCommandPool* commandPool;
 
-        Buffer vertexBuffer;
-        Buffer indexBuffer;
-
-        UniformBufferObject ubo;
-
         void createVertexBuffer();
         void createIndexBuffer();
-        void updateUniformBuffer();
 
-        [[nodiscard]] std::vector<Vertex> getVertexList() const;
+        [[nodiscard]] std::vector<Vertex> getVertices() const;
 
 };

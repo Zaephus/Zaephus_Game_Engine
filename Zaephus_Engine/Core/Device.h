@@ -4,8 +4,6 @@
 #include <vulkan/vulkan.h>
 
 #include <vector>
-#include <stdexcept>
-#include <set>
 
 #include "RenderDebug.h"
 #include "Structs.h"
